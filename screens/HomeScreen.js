@@ -21,6 +21,7 @@ import SvgSelector from "../Utils/SvgSelector";
 
 import ChangingPlaceholderTextInput from "../components/AnimatedTextInput";
 import NewCategories from "../components/HomeScreen/NewCategories";
+import ItemContainer from "../components/HomeScreen/ItemContainer";
 // import FontSize from '../Utils/FontSize';
 
 // const width = Dimensions.get('window').width / 100;  // now width is 1% of screen width
@@ -104,7 +105,7 @@ export default function HomeScreen({ navigation }) {
       <View
         style={{
           height: h(6),
-          
+          backgroundColor:'black',
           flexDirection: "row",
           justifyContent: "center",
         }}
@@ -143,7 +144,7 @@ export default function HomeScreen({ navigation }) {
       <ScrollView style={{ flex: 1, }}>
         <ImageBackground
          
-          style={{ height: h(94) }}
+          style={{  }}
           resizeMode="cover"
         >
           
@@ -155,7 +156,8 @@ export default function HomeScreen({ navigation }) {
               flexDirection: "row",
               backgroundColor: "#242424",
              
-              borderRadius: h(1),
+              borderBottomLeftRadius:  h(1),
+              borderBottomRightRadius:  h(1),
               alignItems: "center",
               padding: h(0.9),
             }}
@@ -190,7 +192,7 @@ export default function HomeScreen({ navigation }) {
           >
             {/* <TextInput style={{flex:1,padding:w(1.5),color:'black'}} placeholder="Search"></TextInput> */}
             <ChangingPlaceholderTextInput/>
-            <Pressable style={{alignSelf:'center',paddingEnd:w(2)}}>
+            <Pressable style={{alignSelf:'center',paddingEnd:w(3)}}>
 
             <SvgSelector name={"search"} fill={"black"} w={w(5)} h={w(5)} />
           </Pressable>
@@ -213,7 +215,27 @@ export default function HomeScreen({ navigation }) {
 {/* categories predefined */}
           <View >
             <NewCategories/>
+            {/* Recommending Recipies */}
+            <View style={{backgroundColor:'#000000B0',marginTop:h(2)}}>
+              <View style={{flexDirection:'row',backgroundColor:'#36443956',width: "100%",justifyContent:'space-between',padding:w(2),borderWidth:w(0.3)}}> 
+            <Text style={{color:'white',fontSize:dynamicFontSize*1.3,fontWeight:'500',textAlign:'center',}}>Recommending Recipies</Text>
+            <Text style={{color:'#ccc',fontSize:dynamicFontSize*0.7,fontWeight:'500',padding:w(2),height: "100%",textAlignVertical:'bottom'}}>View More..</Text>
 
+              </View>
+
+            <ItemContainer limit={4} islimit={true}/>
+            </View>
+
+{/* Trending Recipies */}
+            <View style={{backgroundColor:'#000000B0',marginTop:h(2),borderRadius:w(2),overflow:'hidden'}}>
+              <View style={{flexDirection:'row',backgroundColor:'#36443956',width: "100%",justifyContent:'space-between',padding:w(2),borderWidth:w(0.3),borderTopStartRadius:w(2),borderTopEndRadius:w(2)}}> 
+            <Text style={{color:'white',fontSize:dynamicFontSize*1.3,fontWeight:'500',textAlign:'center',}}>Trending Recipies</Text>
+            <Text style={{color:'#ccc',fontSize:dynamicFontSize*0.7,fontWeight:'500',padding:w(2),height: "100%",textAlignVertical:'bottom'}}>View More..</Text>
+
+              </View>
+
+            <ItemContainer limit={0} islimit={false}/>
+            </View>
           </View>
         </ImageBackground>
       </ScrollView>

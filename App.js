@@ -151,7 +151,7 @@ function CartHandler(){
   }
   return (
    <>
-   <StatusBar style='light'/>
+   <StatusBar style='light' backgroundColor='black'/>
    <NavigationContainer>
     <Start/>
     </NavigationContainer>
