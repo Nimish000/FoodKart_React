@@ -99,7 +99,7 @@ export default function HomeScreen({ navigation }) {
   }, []);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "black", flex: 1 }}>
+    <View style={{ backgroundColor: "black", flex: 1 ,paddingTop:h(4.5)}}>
            
 
       <View
@@ -140,7 +140,7 @@ export default function HomeScreen({ navigation }) {
           }}
         />
       </View>
-      <SvgXml xml={svgCode} width="100%" height="100%" style={{ position: 'absolute', zIndex: -1 }} />
+      <SvgXml xml={svgCode} width="100%" height="100%" style={{ position: 'absolute', zIndex: -1 ,marginTop:h(4.5)}} />
       <ScrollView style={{ flex: 1, }}>
         <ImageBackground
          
@@ -239,6 +239,6 @@ export default function HomeScreen({ navigation }) {
           </View>
         </ImageBackground>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }

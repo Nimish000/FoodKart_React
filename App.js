@@ -17,6 +17,8 @@ import { useEffect } from 'react';
 import LoginScreen from './screens/LoginScreen';
 import { SvgXml } from 'react-native-svg';
 import { Colorss } from './Colors/Colors';
+import ContextProvider from './store/context';
+import NewItem from './screens/NewItem';
 
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +37,7 @@ function HomeDrawer(){
   return(
     <Drawer.Navigator screenOptions={{headerShown:false}}>
       <Drawer.Screen name='HomeScreen' component={HomeScreen}/>
+      <Drawer.Screen name='NewItemScreen' component={NewItem}/>
     </Drawer.Navigator>
   )
 }
@@ -151,10 +154,12 @@ function CartHandler(){
   }
   return (
    <>
-   <StatusBar style='light' backgroundColor='black'/>
+   <StatusBar style='light' backgroundColor='transparent'/>
+   <ContextProvider>
    <NavigationContainer>
     <Start/>
     </NavigationContainer>
+    </ContextProvider>
     </>
   );
 }
