@@ -130,9 +130,9 @@ export default function HomeScreen({ navigation }) {
         </TouchableWithoutFeedback>
 
         <Image
-          source={require("../assets/drawables/gif2.gif")}
+          source={require("../assets/drawables/gif.gif")}
           style={{
-            width: w(40),
+            width: w(20),
             padding: "auto",
             height: "100%",
             alignSelf: "center",
@@ -178,25 +178,28 @@ export default function HomeScreen({ navigation }) {
             </Text>
           </View>
           {/* search */}
+          <Pressable onPress={()=>{navigation.navigate('SearchHandler')}}>
+
           <View
             style={{
               marginTop:h(1),
               borderWidth: 1,
               borderColor: Colorss.green,
-
+              
               marginHorizontal:w(1),
               flexDirection: "row",
               backgroundColor: Colorss.white,
               borderRadius:h(1.2)
             }}
-          >
+            >
             {/* <TextInput style={{flex:1,padding:w(1.5),color:'black'}} placeholder="Search"></TextInput> */}
-            <ChangingPlaceholderTextInput/>
-            <Pressable style={{alignSelf:'center',paddingEnd:w(3)}}>
+            <ChangingPlaceholderTextInput navigation={navigation}/>
+            <View style={{alignSelf:'center',paddingEnd:w(3)}}>
 
             <SvgSelector name={"search"} fill={"black"} w={w(5)} h={w(5)} />
-          </Pressable>
           </View>
+          </View>
+            </Pressable>
 
           {/* viewpager */}
           <View

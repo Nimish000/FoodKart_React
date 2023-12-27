@@ -85,11 +85,11 @@ async function takeImageHandler(useCamera = true) {
   return (
     <>
     
-    <View backgroundColor={'black'} style={{paddingTop:h(4.5),flex:1}}   edges={{bottom:"off",top:'maximum'}}>
+    <View backgroundColor={'black'} style={{paddingTop:h(4.5),flex:1}}   >
       
         <View style={{height: h(4),backgroundColor:'black',flexDirection:'row',alignItems:'center'}}>
             <TouchableWithoutFeedback onPress={()=>{navigation.goBack()}}>
-            <Image source={require('../assets/drawables/gif.gif')} style={{height:'100%', width:w(15),resizeMode:'contain', position:'absolute',zIndex:1}}/>
+            <Image source={require('../assets/drawables/back.png')} style={{height:'50%', width:w(15),resizeMode:'contain', position:'absolute',zIndex:1}}/>
             </TouchableWithoutFeedback>
 <Text style={{fontSize:dynamicFontSize,color:Colorss.white,flex:1,textAlign:'center'}}>Add New Item</Text>
         </View>

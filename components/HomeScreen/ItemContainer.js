@@ -1,9 +1,14 @@
 import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList } from 'react-native-gesture-handler';
 import ItemContainerData from './ItemContainerData';
 
 export default function ItemContainer({limit,islimit}) {
+
+useEffect(()=>{
+
+}),[]
+
     const Data = [
         { id: 1, image: require('../../assets/drawables/1.jpg'), name: "Pancake"                 ,price:"$30"},
         { id: 2, image: require('../../assets/drawables/pasta.jpg'), name: "Pasta"               ,price:"$30"},

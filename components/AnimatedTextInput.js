@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, StyleSheet, Animated, Easing } from "react-native";
+import { View, TextInput, StyleSheet, Animated, Easing, Pressable } from "react-native";
 
-const ChangingPlaceholderTextInput = () => {
+function ChangingPlaceholderTextInput({ navigation }) {
   const placeholders = [
     "Search North Indian",
     "Search Pizza",
@@ -39,45 +39,44 @@ const ChangingPlaceholderTextInput = () => {
     return () => clearInterval(interval);
   }, [placeholderIndex]);
 
+  function searchHandler() {
+    navigation.navigate('SearchHandler');
+  }
+
   return (
-    <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Animated.View
-          style={[
-            styles.input,
-            {
-              transform: [{ translateY: translateYNew }],
-              opacity: opacityNew,
-            },
-          ]}
-        >
-          <TextInput
-            style={styles.inputText}
-            placeholder={placeholders[placeholderIndex]}
-            placeholderTextColor="gray"
-            editable={false}
-          />
-        </Animated.View>
-      </View>
+    <View style={styles.container} onPress={searchHandler}>
+      <Animated.View
+        style={[
+          styles.input,
+          {
+            transform: [{ translateY: translateYNew }],
+            opacity: opacityNew,
+          },
+        ]}
+      >
+        <TextInput
+          style={styles.inputText}
+          placeholder={placeholders[placeholderIndex]}
+          placeholderTextColor="gray"
+          editable={false}
+        />
+      </Animated.View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: 40,
-
+    
     padding: 1,
-  },
-  inputContainer: {
-    overflow: "hidden",
+    justifyContent: "center", // Add this to center the Pressable content
   },
   input: {
     paddingStart: 10,
     width: "100%",
     height: "100%",
-    justifyContent: "center",
   },
   inputText: {
     padding: 10,
