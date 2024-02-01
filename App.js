@@ -19,6 +19,7 @@ import { SvgXml } from 'react-native-svg';
 import { Colorss } from './Colors/Colors';
 import ContextProvider from './store/context';
 import NewItem from './screens/NewItem';
+import { CustomTabBar } from './components/CustomTabBar';
 
 
 const Stack = createNativeStackNavigator();
@@ -109,31 +110,32 @@ function CartHandler(){
         tabBarActiveTintColor: Colorss.green, // Set the active tab text color
         tabBarInactiveTintColor: 'gray', // Set the inactive tab text color
         
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+        // tabBarIcon: ({ focused, color, size }) => {
+        //   let iconName;
 
-          if (route.name === 'HomeHandler') {
-            iconName = focused ? <SvgXml xml={homeSvg({fillColor: Colorss.active})
-            } width={size} height={size} color={color}/> : <SvgXml xml={homeSvg({fillColor: Colorss.inActive})
-            } width={size} height={size} color={color}/>
-          } else if (route.name === 'SearchHandler') {
-            iconName = focused ? <SvgXml xml={seachSvg({fillColor: Colorss.active})
-            } width={size} height={size} color={color}/> : <SvgXml xml={seachSvg({fillColor: Colorss.inActive})
-            } width={size} height={size} color={color}/>
-          } else if (route.name === 'AccountHandler') {
-            iconName = focused ? <SvgXml xml={accountSvg({fillColor: Colorss.active})
-            } width={size} height={size} color={color}/> : <SvgXml xml={accountSvg({fillColor: Colorss.inActive})
-            } width={size} height={size} color={color}/>
-          } else if (route.name === 'CartHandler') {
-            iconName = focused ? <SvgXml xml={cartSvg({fillColor: Colorss.active})
-            } width={size} height={size} color={color}/> : <SvgXml xml={cartSvg({fillColor: Colorss.inActive})
-            } width={size} height={size} color={color}/>
-          }
+        //   if (route.name === 'HomeHandler') {
+        //     iconName = focused ? <SvgXml xml={homeSvg({fillColor: Colorss.active})
+        //     } width={size} height={size} color={color}/> : <SvgXml xml={homeSvg({fillColor: Colorss.inActive})
+        //     } width={size} height={size} color={color}/>
+        //   } else if (route.name === 'SearchHandler') {
+        //     iconName = focused ? <SvgXml xml={seachSvg({fillColor: Colorss.active})
+        //     } width={size} height={size} color={color}/> : <SvgXml xml={seachSvg({fillColor: Colorss.inActive})
+        //     } width={size} height={size} color={color}/>
+        //   } else if (route.name === 'AccountHandler') {
+        //     iconName = focused ? <SvgXml xml={accountSvg({fillColor: Colorss.active})
+        //     } width={size} height={size} color={color}/> : <SvgXml xml={accountSvg({fillColor: Colorss.inActive})
+        //     } width={size} height={size} color={color}/>
+        //   } else if (route.name === 'CartHandler') {
+        //     iconName = focused ? <SvgXml xml={cartSvg({fillColor: Colorss.active})
+        //     } width={size} height={size} color={color}/> : <SvgXml xml={cartSvg({fillColor: Colorss.inActive})
+        //     } width={size} height={size} color={color}/>
+        //   }
 
-          // You can return any component that you like here!
-          return iconName;
-        },
+        //   // You can return any component that you like here!
+        //   return iconName;
+        // },
       })}
+      tabBar={(props) => <CustomTabBar {...props} />}
       
     >
         <Tab.Screen name='HomeHandler' component={HomeHandler}/>
