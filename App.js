@@ -20,6 +20,8 @@ import { Colorss } from './Colors/Colors';
 import ContextProvider from './store/context';
 import NewItem from './screens/NewItem';
 import { CustomTabBar } from './components/CustomTabBar';
+import Intro1 from './screens/Intro1';
+import Intro2 from './screens/Intro2';
 
 
 const Stack = createNativeStackNavigator();
@@ -148,8 +150,10 @@ function CartHandler(){
   }
   function Start(){
     return(
-      <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen name='LoginScreen' component={LoginScreen}/>
+      <Stack.Navigator screenOptions={{headerShown:false,}}>
+        <Stack.Screen name='Intro1Screen' component={Intro1}  options={{}}/>
+        <Stack.Screen name='Intro2Screen' component={Intro2} options={{}}/>
+        <Stack.Screen name='LoginScreen' component={LoginScreen} options={{}}/>
         <Stack.Screen name='BottomTabs' component={TabScreens}/>
       </Stack.Navigator>
     )
