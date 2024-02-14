@@ -2,6 +2,7 @@ import { View, Text, Dimensions, Image, TextInput, TouchableWithoutFeedback } fr
 import React from 'react'
 import { SvgXml } from 'react-native-svg';
 import { Colorss } from '../Colors/Colors';
+import Captcha from '../Utils/Captcha';
 
 
 export default function SearchScreen({navigation}) {
@@ -45,7 +46,7 @@ export default function SearchScreen({navigation}) {
       
 
     </View>
-
+<Captcha/>
 
 
     </View>
