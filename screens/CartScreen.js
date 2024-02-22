@@ -2,6 +2,8 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { SvgXml } from 'react-native-svg';
 import { Colorss } from '../Colors/Colors';
+import YourComponent  from '../Utils/PushNotification';
+
 
 export default function CartScreen() {
   const svgCode = `
@@ -14,6 +16,7 @@ export default function CartScreen() {
   return (
     <View style={{flex:1,backgroundColor:Colorss.black}}>
     <SvgXml xml={svgCode} width="100%" height="100%" style={{ position: 'absolute', zIndex: -1 }} />
+    <YourComponent/>
   </View>
   )
 }

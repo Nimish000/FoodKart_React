@@ -2,12 +2,71 @@ import { View, Text, Image, ScrollView, Pressable, TouchableOpacity, StyleSheet 
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colorss } from "../Colors/Colors";
+import {Service} from "../Utils/Service/Service.js"
+import Endpoint, { EndPoints } from "../Utils/Service/Endpoint.js"
+import { UserManager } from "../manager/UserManager.js";
 
 export default function LoginScreen({navigation}) {
+  const [isPassword, setPassword] = useState('Nimish@123')
+    const [isEmail, setEmail] = useState('nimishsttl@gmail.com')
   const[isLoadMore,setLoadMore]=useState(false)
   function loadmoreHandler(){
     setLoadMore(!isLoadMore)
   }
+
+const onLoginRequest = () => {
+
+      
+    
+          var formData = new FormData()
+          formData.append('email', isEmail)
+          formData.append('password', isPassword)
+          // formData.append('device_id', deviceId)
+    
+          Service.postFormDataFetch(EndPoints.login, formData, (res) => {
+
+            UserManager.token = res?.data?.token;
+            // UserManager.name = res?.userDetails?.contact_name;
+            // UserManager.email = res?.userDetails?.email;
+            // UserManager.userId = res?.userDetails?.id;
+            // UserManager.mobile = res?.userDetails?.mobile_number;
+            // UserManager.userEmail = isEmail;
+            // UserManager.userPassword = isPassword;
+            // UserManager.deviceId = deviceId;
+    console.log(res)
+    console.log(UserManager.token)
+    getServicesList()
+
+    // navigation.navigate('BottomTabs')
+            // res.userEmail = isEmail;
+            // res.userPassword = isPassword;
+            // res.deviceId = deviceId;
+    
+            // AsyncStorage.setItem('@vendor', JSON.stringify(res))
+    
+            // navigation.dispatch(StackActions.replace('VenderHomeRoot'));
+
+          }, (err) => {
+            console.log("###", err);
+          }
+          );
+    
+        
+      }
+      const getServicesList = () => {
+
+        var endPoint = EndPoints.getProfile ;
+        Service.getUsingToken(endPoint, (res) => {
+            console.log("data----->")
+        },
+            (err) => {
+            }
+        );
+    };
+
+
+
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
       <ScrollView
@@ -20,7 +79,7 @@ export default function LoginScreen({navigation}) {
           />
         </View>
         <View >
-        <Pressable style={({pressed})=>[pressed&&styles.pressed,styles.pressable]}
+        <Pressable onPress={onLoginRequest} style={({pressed})=>[pressed&&styles.pressed,styles.pressable]}
          
         >
           <View  style={{flexDirection:'row'}}>

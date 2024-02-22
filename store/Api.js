@@ -1,4 +1,16 @@
 import axios from'axios'
+
+
+
+// const Api_Key="AIzaSyBFfe6jP_U4ANsmsQJm1BpAgBchzwzkRyg"
+// const Base_URL="https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key="
+
+export async function login(email,password){
+    const response=await axios.post(Base_URL+loginUrl,{email:email,password:password})
+    console.log(response.data.success)
+    return response
+}
+
 const BASE_URL='https://foodkart-react-default-rtdb.firebaseio.com/'
  export async function StoreExpense(expenseData){
     const response=await axios.post(BASE_URL+'foodItems.json',expenseData)

@@ -32,7 +32,8 @@
     "react-native-svg": "^14.1.0",
     "react-native-swiper": "^1.6.0",
     "expo-barcode-scanner": "~12.5.3",
-    "expo-camera": "~13.4.4"
+    "expo-camera": "~13.4.4",
+    "expo-notifications": "~0.20.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -158,6 +158,9 @@ function CartHandler(){
       </Stack.Navigator>
     )
   }
+
+
+  
   return (
    <>
    <StatusBar style='light' backgroundColor='transparent'/>
