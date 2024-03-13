@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
   },
   slide: {
     width: "100%",
-    height: 200,
     justifyContent: "center",
     alignItems: "center",
   },

@@ -7,6 +7,8 @@ import {
   TouchableWithoutFeedback,
   ImageBackground,
   Pressable,
+  TouchableNativeFeedback,
+  TouchableHighlight,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dimensions } from "react-native";
@@ -216,6 +218,11 @@ export default function HomeScreen({ navigation }) {
           
           </View>
 {/* categories predefined */}
+<View>
+
+
+
+</View>
           <View >
             <NewCategories/>
             {/* Recommending Recipies */}

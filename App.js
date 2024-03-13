@@ -22,6 +22,8 @@ import NewItem from './screens/NewItem';
 import { CustomTabBar } from './components/CustomTabBar';
 import Intro1 from './screens/Intro1';
 import Intro2 from './screens/Intro2';
+import SignInWithEmail from './screens/SignInWithEmail';
+import SignInWithMobile from './screens/SignInWithMobile';
 
 
 const Stack = createNativeStackNavigator();
@@ -154,6 +156,10 @@ function CartHandler(){
         <Stack.Screen name='Intro1Screen' component={Intro1}  options={{}}/>
         <Stack.Screen name='Intro2Screen' component={Intro2} options={{}}/>
         <Stack.Screen name='LoginScreen' component={LoginScreen} options={{}}/>
+        <Stack.Screen name='SignInWithEmail' component={SignInWithEmail} options={{}}/>
+        <Stack.Screen name='SignInWithMobile' component={SignInWithMobile} options={{}}/>
+
+
         <Stack.Screen name='BottomTabs' component={TabScreens}/>
       </Stack.Navigator>
     )

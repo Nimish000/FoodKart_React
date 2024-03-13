@@ -48,6 +48,16 @@ export const buttonFontSize = AppUtil.getHP(2.5)
 export const headerFontSize = AppUtil.getHP(2.7)
 export const buttonBorderRadius = 5
 
+const { width: viewportWidth } = Dimensions.get('window');
+
+const scaleFactor = viewportWidth / 375; // Adjust 375 based on your design reference width
+
+  // Define the base font size for your design
+  const baseFontSize = 16;
+
+  // Calculate the dynamic font size
+ export const dynamicFontSize = baseFontSize * scaleFactor;
+
 export const getBaseURL = () => {
   return _baseURL;
 }

@@ -5,6 +5,7 @@ import { Colorss } from "../Colors/Colors";
 import {Service} from "../Utils/Service/Service.js"
 import Endpoint, { EndPoints } from "../Utils/Service/Endpoint.js"
 import { UserManager } from "../manager/UserManager.js";
+import { AppUtil, dynamicFontSize } from "../Utils/AppUtils.js";
 
 export default function LoginScreen({navigation}) {
   const [isPassword, setPassword] = useState('Nimish@123')
@@ -15,6 +16,7 @@ export default function LoginScreen({navigation}) {
   }
 
 const onLoginRequest = () => {
+
 
       
     
@@ -84,14 +86,14 @@ const onLoginRequest = () => {
         >
           <View  style={{flexDirection:'row'}}>
 
-          <Image source={require('../assets/drawables/google.png')} style={{height: 35,width: 35,resizeMode:'contain'}}/>
+          <Image source={require('../assets/drawables/google.png')} style={{height: AppUtil.getWP(7),width: AppUtil.getWP(7),resizeMode:'contain'}}/>
           <View style={{justifyContent:'center',flexDirection:'row',flex:1}}>
 
           <Text
             style={{
               color: "white",
               alignSelf: "center",
-              fontSize: 22,
+              fontSize:  dynamicFontSize*1.2,
               fontWeight: "400",
               
             }}
@@ -104,23 +106,23 @@ const onLoginRequest = () => {
         </Pressable >
           {!isLoadMore&&<TouchableOpacity onPress={loadmoreHandler}>
 
-        <Text style={{color:'white',fontSize:20,alignSelf:'center',marginTop:10,marginBottom:10}}>Load More..</Text>
+        <Text style={{color:'white',fontSize:dynamicFontSize*1.2,alignSelf:'center',marginTop:AppUtil.getHP(3),marginBottom:AppUtil.getHP(3)}}>Load More..</Text>
           </TouchableOpacity>}
 
           {isLoadMore&&<View>
-          <Pressable onPress={()=>navigation.navigate('BottomTabs')} style={({pressed})=>[pressed&&styles.pressed,styles.pressable]}
+          <Pressable onPress={()=>navigation.navigate('SignInWithEmail')} style={({pressed})=>[pressed&&styles.pressed,styles.pressable]}
          
          >
            <View  style={{flexDirection:'row'}}>
  
-           <Image source={require('../assets/drawables/mail.png')} style={{height: 35,width: 35,resizeMode:'contain'}}/>
+           <Image source={require('../assets/drawables/mail.png')} style={{height: AppUtil.getWP(7),width: AppUtil.getWP(7),resizeMode:'contain'}}/>
            <View style={{justifyContent:'center',flexDirection:'row',flex:1}}>
  
            <Text
              style={{
                color: "white",
                alignSelf: "center",
-               fontSize: 22,
+               fontSize: dynamicFontSize*1.2,
                fontWeight: "400",
                
              }}
@@ -131,19 +133,19 @@ const onLoginRequest = () => {
  
                </View>
          </Pressable >
-         <Pressable  style={({pressed})=>[pressed&&styles.pressed,styles.pressable]}
+         <Pressable onPress={()=>navigation.navigate('SignInWithMobile')} style={({pressed})=>[pressed&&styles.pressed,styles.pressable]}
          
         >
           <View  style={{flexDirection:'row'}}>
 
-          <Image source={require('../assets/drawables/phone.png')} style={{height: 35,width: 35,resizeMode:'contain'}}/>
+          <Image source={require('../assets/drawables/phone.png')} style={{height: AppUtil.getWP(7),width: AppUtil.getWP(7),resizeMode:'contain'}}/>
           <View style={{justifyContent:'center',flexDirection:'row',flex:1}}>
 
           <Text
             style={{
               color: "white",
               alignSelf: "center",
-              fontSize: 22,
+              fontSize:  dynamicFontSize*1.2,
               fontWeight: "400",
               
             }}

@@ -1,9 +1,11 @@
-import { View, Text, Dimensions, Image, TextInput, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, Dimensions, Image, TextInput, TouchableWithoutFeedback, StyleSheet, ImageBackground } from 'react-native'
 import React from 'react'
 import { SvgXml } from 'react-native-svg';
 import { Colorss } from '../Colors/Colors';
 import Captcha from '../Utils/Captcha';
-
+import {AppUtil, AppUtils, dynamicFontSize} from "../Utils/AppUtils"
+import { Ionicons } from '@expo/vector-icons';
+import Categories from '../components/Categories';
 
 export default function SearchScreen({navigation}) {
   const svgCode = `
@@ -34,21 +36,117 @@ export default function SearchScreen({navigation}) {
       return height*value
     }
   return (
+    
     <View style={{flex:1,backgroundColor:Colorss.black,paddingTop:h(4.5)}}>
+      <ImageBackground source={require('../assets/drawables/Pattern.png')} style={{flex: 1,
+    resizeMode: 'contain', // or 'stretch' as needed
+    position: 'absolute',
+    zIndex: -1,
+    width: '100%',
+    height: '100%',}}/>
       {/* <SvgXml xml={svgCode} width="100%" height="100%" style={{ position: 'absolute', zIndex: -1,marginTop:h(4.5) }} /> */}
 {/* header (search& back) */}
-    <View style={{alignItems:'center',paddingVertical:h(2),flexDirection:'row'}}>
-      <TouchableWithoutFeedback onPress={()=>{navigation.goBack()}}>
+<View style={{
+  marginTop:AppUtil.getHP(2),flexDirection:'row',justifyContent:'space-between'
+}}>
+  <Text style={{color:Colorss.white,fontSize:dynamicFontSize*2.4,fontWeight:'800',width:AppUtil.getWP(60),marginStart:AppUtil.getWP(7)}}>
+    Find Your Favourite Food
+  </Text>
+  <TouchableWithoutFeedback onPress={()=>{navigation.goBack()}}>
 
-      <Image source={require('../assets/drawables/back.png')} style={{height: '100%',width:w(5),resizeMode:'contain',position: 'absolute',marginStart:w(1)}}/>
-      </TouchableWithoutFeedback>
-      <TextInput placeholder='Search For Products' style={{flex:1,borderWidth:1,marginHorizontal:w(10),padding:w(3),backgroundColor:Colorss.white,borderRadius:w(5),fontSize:dynamicFontSize}}/>
+
+<Image source={require('../assets/drawables/back.png')} style={{width:w(5),resizeMode:'contain',marginStart:w(1),marginEnd:AppUtil.getWP(10)}}/>
+</TouchableWithoutFeedback>
+</View>
+
+<View style={styles.container}>
+      <Ionicons name="search" size={24} color="#757575" style={styles.icon} />
+      <TextInput
+        placeholder="Search For Products"
+        placeholderTextColor="#757575"
+        style={styles.textInput}
+      />
+    </View>
+    <View style={styles.viewContainer}>
+    
+
+    <Text style={{color:Colorss.white,fontSize:dynamicFontSize}}>
+        Type
+      </Text>
       
 
+      <View style={{flexDirection:'row',padding:AppUtil.getWP(3)}}>
+      <Categories data={"Restaurant"}/>
+    <Categories data={"Menu"}/>
+      </View>
     </View>
-<Captcha/>
+
+    <View style={styles.viewContainer}>
+    
+
+    <Text style={{color:Colorss.white,fontSize:dynamicFontSize}}>
+        Location
+      </Text>
+      
+
+      <View style={{flexDirection:'row',padding:AppUtil.getWP(3)}}>
+      <Categories data={"1 Km"}/>
+    <Categories data={">10 Km"}/>
+    <Categories data={">10 Km"}/>
+
+      </View>
+    </View>
+
+    <View style={styles.viewContainer}>
+    
+
+    <Text style={{color:Colorss.white,fontSize:dynamicFontSize}}>
+        Food
+      </Text>
+      
+
+      <View style={{flexDirection:'row',padding:AppUtil.getWP(3)}}>
+      <Categories data={"Cake"}/>
+    <Categories data={"Soup"}/>
+    <Categories data={"Main Course"}/>
+    <Categories data={"Appetizer"}/>
+    
+
+
+      </View>
+    </View>
 
 
     </View>
   )
 }
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    borderWidth: 1,
+    padding: AppUtil.getWP(3), // Adjust as needed
+
+    paddingVertical: AppUtil.getHP(2), // Adjust as needed
+    flexDirection: 'row',
+    backgroundColor: Colorss.grey, // Adjust as needed
+    borderRadius: AppUtil.getWP(3)
+    ,backgroundColor: Colorss.grey, // Adjust as needed
+    marginTop:AppUtil.getHP(2)
+    
+  },
+  icon: {
+    marginRight: AppUtil.getWP(1), // Adjust as 
+    
+  },
+  textInput: {
+    flex: 1,
+   color:Colorss.white,
+    marginHorizontal: AppUtil.getWP(5), // Adjust as needed
+     // Adjust as needed
+    fontSize: dynamicFontSize, // Adjust as needed
+  },
+  viewContainer:{
+    marginTop:AppUtil.getHP(2),
+    marginStart:AppUtil.getWP(2)
+  }
+});

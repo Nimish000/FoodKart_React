@@ -5,6 +5,8 @@ export const Colorss={
     'active':'#49d587',
     'inActive':'#fff',
     'white':'#fff',
-    'black':'#000'
+    'black':'#000',
+    'grey':'#252525'
+
 
 }
