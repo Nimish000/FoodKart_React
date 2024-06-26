@@ -24,6 +24,7 @@ import Intro1 from './screens/Intro1';
 import Intro2 from './screens/Intro2';
 import SignInWithEmail from './screens/SignInWithEmail';
 import SignInWithMobile from './screens/SignInWithMobile';
+import Register from './screens/Register';
 
 
 const Stack = createNativeStackNavigator();
@@ -158,6 +159,8 @@ function CartHandler(){
         <Stack.Screen name='LoginScreen' component={LoginScreen} options={{}}/>
         <Stack.Screen name='SignInWithEmail' component={SignInWithEmail} options={{}}/>
         <Stack.Screen name='SignInWithMobile' component={SignInWithMobile} options={{}}/>
+        <Stack.Screen name='Register' component={Register} options={{}}/>
+
 
 
         <Stack.Screen name='BottomTabs' component={TabScreens}/>

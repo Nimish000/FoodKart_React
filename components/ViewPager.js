@@ -8,59 +8,64 @@ import {
 } from "react-native";
 import Swiper from "react-native-swiper";
 import { Colorss } from "../Colors/Colors";
-// import { getBanners } from "../Util/auth";
-
-const Data = [
-    require("../assets/drawables/banner.png"),
-    require("../assets/drawables/banner2.png"),
-    require("../assets/drawables/banner3.png"),
-  ];
+import { Service } from "../Utils/Service/Service";
+import { EndPoints } from "../Utils/Service/Endpoint";
 
 const ViewPager = ({ navigation }) => {
-//   const [bannerData, setBannerData] = useState({ banners: [Data] });
   const [loading, setLoading] = useState(true);
+  const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const data = await getBanners();
-    //     setBannerData(data);
-    //   } catch (error) {
-    //     console.error("Error fetching banner data:", error);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-
-    // fetchData();
+    console.log(banners);
+    getBannersList();
   }, []);
 
-//   if (loading) {
-//     return (
-//       <ActivityIndicator
-//         size="large"
-//         color="black"
-//         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-//       />
-//     );
-//   }
+  const getBannersList = () => {
+    var endPoint = EndPoints.banners;
+    Service.getUsingToken(endPoint, (res) => {
+      console.log("banners----->", res.banners);
+      const convertedBanners = res.banners.map(banner => ({
+        ...banner,
+        url: convertDriveUrl(banner.url),
+      }));
+      setBanners(convertedBanners);
+      setLoading(false);
+    },
+    (err) => {
+      console.error("Error fetching banner data:", err);
+      setLoading(false);
+    });
+  };
+
+  const convertDriveUrl = (url) => {
+    const fileId = url.split('/d/')[1].split('/view')[0];
+    return `https://drive.google.com/uc?id=${fileId}`;
+  };
+
+  if (loading) {
+    return (
+      <ActivityIndicator
+        size="large"
+        color="black"
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      />
+    );
+  }
 
   return (
     <Swiper
       style={styles.wrapper}
       showsButtons={false}
       autoplay={true}
-      autoplayTimeout={5} // Set to 3 seconds
-      showsPagination={true} // Enable pagination (dots)
-      dotStyle={{ backgroundColor: "black", width: 8, height: 8 }} // Customize dot style
-      activeDotStyle={{ backgroundColor: Colorss.green, width: 10, height: 10 }} // Customize active dot style
+      autoplayTimeout={5}
+      showsPagination={true}
+      dotStyle={{ backgroundColor: "black", width: 8, height: 8 }}
+      activeDotStyle={{ backgroundColor: Colorss.green, width: 10, height: 10 }}
     >
-      {Data.map((banner, id) => (
-        <Pressable key={id} >
-          <View  style={styles.slide}>
-            {/* <Image style={styles.image} source={{ uri: banner.image }} /> */}
-            <Image style={styles.image} source={ banner} />
-
+      {banners.map((banner, id) => (
+        <Pressable key={id}>
+          <View style={styles.slide}>
+            <Image style={styles.image} source={{ uri: banner.url }} />
           </View>
         </Pressable>
       ))}

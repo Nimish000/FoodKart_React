@@ -19,9 +19,15 @@ import { AppUtil, dynamicFontSize } from "../Utils/AppUtils.js";
 import { Ionicons } from "@expo/vector-icons";
 import { validateLogin } from "../Utils/Validations.js";
 
-export default function SignInWithEmail({ navigation }) {
+export default function Register({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
+
+  const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
+
+
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,34 +45,83 @@ export default function SignInWithEmail({ navigation }) {
       formData.append("email", email);
       formData.append("password", password);
       // formData.append('device_id', deviceId)
-
+  
       Service.postFormDataFetch(
         EndPoints.login,
         formData,
         (res) => {
           UserManager.token = res?.data?.token;
-
+        
           console.log(res);
           console.log(UserManager.token);
-          if (res.result_flag == 1) {
-            console.log("Login successful");
-            Alert.alert(res?.message);
-          navigation.navigate("BottomTabs");
-
-          }else{
-            Alert.alert(res?.message);
-
-          }
-
+          console.log("Login successful");
+          Alert.alert("Login Successfully")
+      navigation.navigate("BottomTabs");
+         
         },
         (err) => {
           console.log("###", err);
         }
       );
+      
     } else {
       // Display validation error message
       Alert.alert("Validation Error", validationResult.errorMessage);
     }
+
+   
+  };
+  const onRegisterRequest = () => {
+    var formData = new FormData();
+    formData.append("name", name);
+
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("role", "admin");
+    formData.append("mobile", mobile);
+
+
+    // formData.append('device_id', deviceId)
+
+    Service.postFormDataFetch(
+      EndPoints.register,
+      formData,
+      (res) => {
+        // UserManager.token = res?.data?.token;
+        // UserManager.name = res?.userDetails?.contact_name;
+        // UserManager.email = res?.userDetails?.email;
+        // UserManager.userId = res?.userDetails?.id;
+        // UserManager.mobile = res?.userDetails?.mobile_number;
+        // UserManager.userEmail = isEmail;
+        // UserManager.userPassword = isPassword;
+        // UserManager.deviceId = deviceId;
+        console.log(res);
+        if(res?.result_flag==1){
+          Alert.alert(res.message)
+
+        }else{
+          Alert.alert(res.message)
+
+        }
+        
+        
+        // console.log(UserManager.token);
+        // getServicesList()
+
+        // navigation.navigate('BottomTabs')
+        // res.userEmail = isEmail;
+        // res.userPassword = isPassword;
+        // res.deviceId = deviceId;
+
+        // AsyncStorage.setItem('@vendor', JSON.stringify(res))
+
+        // navigation.dispatch(StackActions.replace('VenderHomeRoot'));
+      },
+      (err) => {
+        console.log("###", err);
+        Alert.alert(err)
+      }
+    );
   };
 
   const onLoginRequest = () => {
@@ -117,6 +172,21 @@ export default function SignInWithEmail({ navigation }) {
           />
         </View>
         <View style={{ marginTop: AppUtil.getHP(8) }}>
+          {/* name */}
+        <View style={styles.container}>
+            <TextInput
+              placeholder="Name"
+              placeholderTextColor="#757575"
+              style={styles.textInput}
+              // secureTextEntry={!showPassword}
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
+            <TouchableOpacity style={styles.iconContainer}>
+              <Ionicons name={"person"} size={24} color="#757575" />
+            </TouchableOpacity>
+          </View>
+{/* email */}
           <View style={styles.container}>
             <TextInput
               placeholder="Email"
@@ -130,7 +200,7 @@ export default function SignInWithEmail({ navigation }) {
               <Ionicons name={"mail"} size={24} color="#757575" />
             </TouchableOpacity>
           </View>
-
+{/* password */}
           <View style={styles.container}>
             <TextInput
               placeholder="Password"
@@ -151,23 +221,29 @@ export default function SignInWithEmail({ navigation }) {
               />
             </TouchableOpacity>
           </View>
-          <Pressable onPress={() => navigation.navigate("Register")}>
-            <Text
-              style={{
-                color: Colorss.white,
-                alignSelf: "flex-start",
-                marginStart: AppUtil.getWP(7),
-                marginTop: AppUtil.getHP(1.3),
-                fontSize: dynamicFontSize * 0.8,
-                fontWeight: "600",
-              }}
-            >
-              Don't have an account? Register Here
-            </Text>
-          </Pressable>
+          {/* mobile */}
+          <View style={styles.container}>
+            <TextInput
+              placeholder="Mobile Number"
+              placeholderTextColor="#757575"
+              style={styles.textInput}
+              // secureTextEntry={!showPassword}
+              value={mobile}
+              onChangeText={(text) => setMobile(text)}
+            />
+            <TouchableOpacity style={styles.iconContainer}>
+              <Ionicons name={"phone-portrait"} size={24} color="#757575" />
+            </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity onPress={onLoginReq} style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Login</Text>
+        
+
+
+          <TouchableOpacity
+            onPress={onRegisterRequest}
+            style={styles.buttonContainer}
+          >
+            <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -201,10 +277,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: Colorss.green, // Change the background color to your preference
     padding: AppUtil.getHP(2),
-    marginTop: AppUtil.getHP(13),
+    marginTop: AppUtil.getHP(8),
     marginHorizontal: AppUtil.getWP(20),
     borderRadius: AppUtil.getHP(2),
-    alignItems: "center",
+    marginBottom:AppUtil.getHP(8),
+    alignItems: "center"
   },
   buttonText: {
     color: "#ffffff", // Change the text color to your preference

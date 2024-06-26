@@ -1,4 +1,5 @@
 export const EndPoints={
-    login:'login',
-    getProfile:'get-profile'
+    login:'api/login',
+    register:'api/register',
+    banners:'api/banners'
 }
