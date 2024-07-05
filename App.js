@@ -25,6 +25,7 @@ import Intro2 from './screens/Intro2';
 import SignInWithEmail from './screens/SignInWithEmail';
 import SignInWithMobile from './screens/SignInWithMobile';
 import Register from './screens/Register';
+import NewCategory from './screens/NewCategory';
 
 
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,8 @@ function HomeDrawer(){
     <Drawer.Navigator screenOptions={{headerShown:false}}>
       <Drawer.Screen name='HomeScreen' component={HomeScreen}/>
       <Drawer.Screen name='NewItemScreen' component={NewItem}/>
+      <Drawer.Screen name='NewCategoryScreen' component={NewCategory}/>
+
     </Drawer.Navigator>
   )
 }

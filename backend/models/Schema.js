@@ -1,22 +1,28 @@
 const mongoose = require('mongoose');
 
-const bannerSchema = mongoose.Schema(
-  {
-    url: {
-      type: String,
-      required: true,
-    },
-    id: {
-      type: String,
-      required: true,
-    },
-   
+
+
+const itemSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
   },
-  {
-    timestamps: true,
-  }
-);
+  price: {
+    type: Number,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  url: {
+    type: String,
+    required: true,
+  },
+}, {
+  timestamps: true, // Automatically manage createdAt and updatedAt fields
+});
 
-const Banner = mongoose.model('Banners', bannerSchema);
+const Item = mongoose.model('Item', itemSchema);
 
-module.exports = Banner;
+module.exports = {Item};

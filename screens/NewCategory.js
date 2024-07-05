@@ -5,7 +5,7 @@ import { Colorss } from '../Colors/Colors';
 import { EndPoints } from '../Utils/Service/Endpoint';
 import { Service } from '../Utils/Service/Service';
 
-export default function NewItem({ navigation }) {
+export default function NewCategory({ navigation }) {
   const [resImage, setImage] = useState();
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -68,9 +68,8 @@ export default function NewItem({ navigation }) {
   async function submitHandler() {
     const formData = new FormData();
     formData.append('name', name);
-    formData.append('price', price);
-    formData.append('description', description);
-    formData.append('photo', {
+
+    formData.append('image', {
       uri: resImage,
       type: 'image/jpeg',
       name: 'photo.jpg',
@@ -78,7 +77,7 @@ export default function NewItem({ navigation }) {
 
     try {
       Service.postFormDataFetch(
-        EndPoints.upload,
+        EndPoints.upload_categories,
         formData,
         (res) => {
           console.log(res);
@@ -133,7 +132,7 @@ export default function NewItem({ navigation }) {
               onChangeText={setName}
             />
           </View>
-          <View style={{ flexDirection: 'column', marginTop: h(2) }}>
+          {/* <View style={{ flexDirection: 'column', marginTop: h(2) }}>
             <Text style={{ fontSize: dynamicFontSize * 0.9, paddingStart: w(1) }}>Price</Text>
             <TextInput
               placeholder='Enter Price Here...'
@@ -151,7 +150,7 @@ export default function NewItem({ navigation }) {
               value={description}
               onChangeText={setDescription}
             />
-          </View>
+          </View> */}
           <View style={{ flexDirection: 'column', marginTop: h(2) }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ fontSize: dynamicFontSize * 0.9, paddingStart: w(1) }}>Upload Image</Text>
