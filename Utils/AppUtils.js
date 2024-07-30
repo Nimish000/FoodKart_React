@@ -6,7 +6,7 @@ import { StringUtil } from './StringUtil';
 const loginUrl="api/login"
 
 
-const _baseURL = 'http://nimish.timesole.com/api/';
+const _baseURL = 'http://192.168.1.41:5000/';
 const _userProfile =  "noData";
 let isLoding = false;
 

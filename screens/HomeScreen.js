@@ -24,6 +24,8 @@ import SvgSelector from "../Utils/SvgSelector";
 import ChangingPlaceholderTextInput from "../components/AnimatedTextInput";
 import NewCategories from "../components/HomeScreen/NewCategories";
 import ItemContainer from "../components/HomeScreen/ItemContainer";
+import { EndPoints } from "../Utils/Service/Endpoint";
+import { Service } from "../Utils/Service/Service";
 // import FontSize from '../Utils/FontSize';
 
 // const width = Dimensions.get('window').width / 100;  // now width is 1% of screen width
@@ -57,6 +59,8 @@ export default function HomeScreen({ navigation }) {
     return height * value;
   }
   const [address, setAddress] = useState("");
+  const [banners, setBanners] = useState([]);
+
 
   useEffect(() => {
     // Get current location
@@ -98,8 +102,20 @@ export default function HomeScreen({ navigation }) {
 
     // Get current location and verify camera permissions
     getCurrentLocation();
+    getBannersList()
   }, []);
+  const getBannersList = () => {
 
+        var endPoint = EndPoints.banners ;
+        Service.getUsingToken(endPoint, (res) => {
+            console.log("data----->",res)
+            setBanners(res?.banners)
+
+        },
+            (err) => {
+            }
+        );
+    };
   return (
     <View style={{ backgroundColor: "black", flex: 1 ,paddingTop:h(4.5)}}>
            
@@ -214,7 +230,7 @@ export default function HomeScreen({ navigation }) {
               overflow: "hidden",
             }}
           >
-            <ViewPager />
+            <ViewPager banners={banners} />
           
           </View>
 {/* categories predefined */}

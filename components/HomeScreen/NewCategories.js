@@ -1,5 +1,5 @@
 import { View, Text, FlatList } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import RoundListData from "./RoundListData";
 import {} from'../../assets/drawables/1.jpg'
 
@@ -17,6 +17,7 @@ const Data = [
 ];
 
 export default function NewCategories() {
+  // useEffect(()->{},[])
   function renderItemHandler(itemData) {
     return <RoundListData {...itemData.item} />;
   }
