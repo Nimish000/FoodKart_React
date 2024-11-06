@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,8 +17,8 @@ import { UserManager } from "../manager/UserManager.js";
 import { AppUtil, dynamicFontSize } from "../Utils/AppUtils.js";
 
 export default function LoginScreen({ navigation }) {
-  const [isPassword, setPassword] = useState("testpassword");
-  const [isEmail, setEmail] = useState("testuser@gmail.com");
+  const [isPassword, setPassword] = useState("Admin@123");
+  const [isEmail, setEmail] = useState("admin@gmail.co");
   const [isLoadMore, setLoadMore] = useState(false);
   function loadmoreHandler() {
     setLoadMore(!isLoadMore);
@@ -37,7 +38,15 @@ export default function LoginScreen({ navigation }) {
       
         console.log(res);
         console.log(UserManager.token);
-       
+        if (res.result_flag == 1) {
+          console.log("Login successful");
+          Alert.alert(res?.message);
+        navigation.navigate("BottomTabs");
+
+        }else{
+          Alert.alert(res?.message);
+
+        }
       },
       (err) => {
         console.log("###", err);

@@ -2,12 +2,29 @@ import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { FlatList } from 'react-native-gesture-handler';
 import ItemContainerData from './ItemContainerData';
+import { EndPoints } from '../../Utils/Service/Endpoint';
+import { Service } from '../../Utils/Service/Service';
 
 export default function ItemContainer({limit,islimit}) {
 
-useEffect(()=>{
-
-}),[]
+  useEffect(()=>{
+    getCategoriesList()
+      },[])
+      const [items, setItems] = useState([]);
+    
+      const getCategoriesList = () => {
+    
+        var endPoint = EndPoints.items ;
+        Service.getUsingToken(endPoint, (res) => {
+            console.log("item data----->",res)
+            setItems(res?.banners)
+            console.log("get item",items[0])
+    
+        },
+            (err) => {
+            }
+        );
+    };
 
     const Data = [
         { id: 1, image: require('../../assets/drawables/1.jpg'), name: "Pancake"                 ,price:"$30"},
@@ -33,7 +50,9 @@ useEffect(()=>{
       return (
         <FlatList
         
-        data={islimit?Data.slice(0,limit):Data}
+        data={items}
+        // data={islimit?Data.slice(0,limit):Data}
+
         renderItem={renderItemHandler}
         keyExtractor={(item) => item.id}
         horizontal={false} // Set to true for horizontal layout

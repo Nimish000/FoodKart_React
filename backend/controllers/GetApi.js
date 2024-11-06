@@ -23,11 +23,11 @@ const getBanners = async (req, res) => {
 // Controller to get the list of items
 const getItems = async (req, res) => {
   try {
-    const banners = await Item.find({});
+    const items = await Item.find({});
     res.status(200).json({
       message: 'Item List fetched successfully',
       result_flag: 1,
-      banners,
+      items,
     });
   } catch (error) {
     console.error(error);

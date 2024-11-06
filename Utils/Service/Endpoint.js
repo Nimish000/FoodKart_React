@@ -4,5 +4,7 @@ export const EndPoints={
     banners:'api/banners',
     upload:'api/upload',
     upload_categories:'api/upload_categories',
-    categories:'api/categories'
+    categories:'api/categories',
+    items:'api/items'
+
 }

@@ -23,10 +23,10 @@ router.get('/banners', getBanners);
 router.get('/items', getItems);
 
 
-router.post('/upload', uploadM.single('photo'), uploadItem);
+router.post('/upload', uploadM.single('url'), uploadItem);
 
 //categories
-router.post('/upload_categories', uploadC.single('photo'), createCategory);
+router.post('/upload_categories', uploadC.single('url'), createCategory);
 router.get('/categories', getCategory);
 
 

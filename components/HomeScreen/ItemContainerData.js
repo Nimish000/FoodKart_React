@@ -1,9 +1,9 @@
 import { View, Text, Dimensions, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 
-export default function ItemContainerData({id,image,name,price}) {
+export default function ItemContainerData({_id,url,name,price,description}) {
     const { width, height } = Dimensions.get("window");
-  console.log(id,image,name)
+  console.log(_id,url,name)
  
   // Calculate a scaling factor based on the screen width
   const scaleFactor = width / 375; // Adjust 375 based on your design reference width
@@ -22,9 +22,11 @@ export default function ItemContainerData({id,image,name,price}) {
     const height = Dimensions.get("window").height / 100; // now height is 1% of screen height
     return height * value;
   }
+  const img=`http://192.168.1.30:5000/${url}`
+
   return (
     <TouchableOpacity  style={{height: w(40),width: w(40),marginBottom:w(2),marginHorizontal:w(5),marginTop:h(1),overflow:'hidden',borderWidth:0}}>
-      <Image source={image} style={{width: "100%",height: "70%",borderRadius:w(1)}}/>
+      <Image source={{uri:img}} style={{width: "100%",height: "70%",borderRadius:w(1)}}/>
       <View style={{flexDirection:'row',justifyContent:'space-between',marginHorizontal:w(5)}}>
 
       

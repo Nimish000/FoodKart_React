@@ -4,6 +4,7 @@ import { useCameraPermissions, useMediaLibraryPermissions, launchCameraAsync, la
 import { Colorss } from '../Colors/Colors';
 import { EndPoints } from '../Utils/Service/Endpoint';
 import { Service } from '../Utils/Service/Service';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function NewCategory({ navigation }) {
   const [resImage, setImage] = useState();
@@ -33,6 +34,8 @@ export default function NewCategory({ navigation }) {
 
     if (permissionInformation.status === PermissionStatus.DENIED) {
       Alert.alert(`Permissions Denied for ${permissionType}`, `Please enable ${permissionType.toLowerCase()} permission in your device settings.`);
+      const permissionResponse = await requestPermission();
+      return permissionResponse.granted;
       return false;
     }
 
@@ -69,7 +72,7 @@ export default function NewCategory({ navigation }) {
     const formData = new FormData();
     formData.append('name', name);
 
-    formData.append('image', {
+    formData.append('url', {
       uri: resImage,
       type: 'image/jpeg',
       name: 'photo.jpg',
@@ -114,14 +117,14 @@ export default function NewCategory({ navigation }) {
   }
 
   return (
-    <View backgroundColor={'black'} style={{ paddingTop: h(4.5), flex: 1 }}>
+    <KeyboardAwareScrollView backgroundColor={'black'} style={{ paddingTop: h(4.5), flex: 1 }}>
       <View style={{ height: h(4), backgroundColor: 'black', flexDirection: 'row', alignItems: 'center' }}>
         <TouchableWithoutFeedback onPress={() => { navigation.goBack() }}>
           <Image source={require('../assets/drawables/back.png')} style={{ height: '50%', width: w(15), resizeMode: 'contain', position: 'absolute', zIndex: 1 }} />
         </TouchableWithoutFeedback>
-        <Text style={{ fontSize: dynamicFontSize, color: Colorss.white, flex: 1, textAlign: 'center' }}>Add New Item</Text>
+        <Text style={{ fontSize: dynamicFontSize, color: Colorss.white, flex: 1, textAlign: 'center' }}>Add New Category</Text>
       </View>
-      <View style={{ backgroundColor: Colorss.white, flex: 1, justifyContent: 'center' }}>
+      <View style={{ backgroundColor: Colorss.white, flex: 1,height:h(96),paddingTop:h(10) }}>
         <View style={{ backgroundColor: '#49D5882D', marginHorizontal: w(5), padding: w(5), borderRadius: w(5), justifyContent: 'center' }}>
           <View style={{ flexDirection: 'column' }}>
             <Text style={{ fontSize: dynamicFontSize * 0.9, paddingStart: w(1) }}>Name</Text>
@@ -167,6 +170,6 @@ export default function NewCategory({ navigation }) {
           <Button title='Upload' onPress={submitHandler} />
         </View>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }

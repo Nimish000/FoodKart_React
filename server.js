@@ -28,7 +28,8 @@ app.get('/',(req,res)=>{
 // })
 
 app.use('/api/',userRoutes);
-
+// Serve the uploads directory as a static path
+app.use('/uploads', express.static('uploads'));
 app.use(notFound)
 app.use(errorHandler)
 

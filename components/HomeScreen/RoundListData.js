@@ -1,10 +1,11 @@
 import { View, Text, Dimensions, Image, Pressable, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { Colorss } from '../../Colors/Colors';
+import { _baseURL, AppUtil } from '../../Utils/AppUtils';
 
-export default function RoundListData({id,image,name}) {
+export default function RoundListData({id,url,name}) {
   const { width, height } = Dimensions.get("window");
-  console.log(id,image,name)
+  console.log(id,url,name)
  
   // Calculate a scaling factor based on the screen width
   const scaleFactor = width / 375; // Adjust 375 based on your design reference width
@@ -23,9 +24,15 @@ export default function RoundListData({id,image,name}) {
     const height = Dimensions.get("window").height / 100; // now height is 1% of screen height
     return height * value;
   }
+  const img=`http://192.168.1.30:5000/${url}`
+
+  console.log(img)
+  // const img=`../../${url}`
   return (
     <TouchableOpacity  style={{height: w(20),width: w(15),marginStart:w(4),marginTop:h(1),overflow:'hidden'}}>
-      <Image source={image} style={{width: "100%",height: w(17),borderRadius:w(7)}}/>
+      <Image source={{uri:img}} style={{width: "100%",height: w(17),borderRadius:w(7)}}/>
+     
+      {/* <Image source={{uri:`${url}`}} style={{width: "100%",height: w(17),borderRadius:w(7)}}/> */}
       <Text style={{color:'white',alignSelf:'center',fontSize:dynamicFontSize*0.6}}>{name}</Text>
     </TouchableOpacity>
   )

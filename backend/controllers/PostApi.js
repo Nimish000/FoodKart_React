@@ -1,6 +1,6 @@
 const multer = require('multer');
 const path = require('path');
-const Item = require('../models/Schema');
+const { Item } = require('../models/Schema');
 
 
 // Configure multer storage

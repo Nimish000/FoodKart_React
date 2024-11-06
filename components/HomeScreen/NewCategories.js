@@ -1,7 +1,9 @@
 import { View, Text, FlatList } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import RoundListData from "./RoundListData";
 import {} from'../../assets/drawables/1.jpg'
+import { EndPoints } from "../../Utils/Service/Endpoint";
+import { Service } from "../../Utils/Service/Service";
 
 const Data = [
   { id: 1, image: require('../../assets/drawables/1.jpg'), name: "Pancake" },
@@ -16,14 +18,30 @@ const Data = [
   { id: 10, image:require('../../assets/drawables/panipuri.webp'), name: "Panipuri" },
 ];
 
-export default function NewCategories() {
-  // useEffect(()->{},[])
+export default function NewCategories({category}) {
+  useEffect(()=>{
+getCategoriesList()
+  },[])
+  const [categories, setCategories] = useState([]);
+
+  const getCategoriesList = () => {
+
+    var endPoint = EndPoints.categories ;
+    Service.getUsingToken(endPoint, (res) => {
+        console.log("data----->",res)
+        setCategories(res?.categories)
+
+    },
+        (err) => {
+        }
+    );
+};
   function renderItemHandler(itemData) {
     return <RoundListData {...itemData.item} />;
   }
   return (
     <FlatList
-    data={Data}
+    data={categories}
     renderItem={renderItemHandler}
     keyExtractor={(item) => item.id}
     horizontal={false} // Set to true for horizontal layout
