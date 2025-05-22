@@ -6,7 +6,7 @@ import { StringUtil } from './StringUtil';
 const loginUrl="api/login"
 
 
-export const  _baseURL = 'http://192.168.1.30:5000/';
+export const  _baseURL = 'http://192.168.1.9:5000/';
 const _userProfile =  "noData";
 let isLoding = false;
 

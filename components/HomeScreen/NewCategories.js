@@ -46,7 +46,7 @@ getCategoriesList()
     keyExtractor={(item) => item.id}
     horizontal={false} // Set to true for horizontal layout
      // Set the number of columns (change as needed)
-     numColumns={5}
+     numColumns={6}
      scrollEnabled={false}
   />
   );

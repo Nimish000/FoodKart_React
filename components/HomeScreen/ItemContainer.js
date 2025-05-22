@@ -17,7 +17,7 @@ export default function ItemContainer({limit,islimit}) {
         var endPoint = EndPoints.items ;
         Service.getUsingToken(endPoint, (res) => {
             console.log("item data----->",res)
-            setItems(res?.banners)
+            setItems(res?.items)
             console.log("get item",items[0])
     
         },

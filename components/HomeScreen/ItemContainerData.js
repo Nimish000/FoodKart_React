@@ -22,7 +22,7 @@ export default function ItemContainerData({_id,url,name,price,description}) {
     const height = Dimensions.get("window").height / 100; // now height is 1% of screen height
     return height * value;
   }
-  const img=`http://192.168.1.30:5000/${url}`
+  const img=`http://192.168.1.9:5000/${url}`
 
   return (
     <TouchableOpacity  style={{height: w(40),width: w(40),marginBottom:w(2),marginHorizontal:w(5),marginTop:h(1),overflow:'hidden',borderWidth:0}}>
