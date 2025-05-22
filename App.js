@@ -10,6 +10,7 @@ import AccountScreen from './screens/AccountScreen'
 
 import CartScreen from './screens/CartScreen'
 import SplashScreen from 'expo-splash-screen';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import  SplashScreenn from './screens/SplashScreen';
@@ -43,7 +44,7 @@ export default function App() {
 function HomeDrawer(){
   return(
     <Drawer.Navigator screenOptions={{headerShown:false}}>
-      <Drawer.Screen name='HomeScreen' component={HomeScreen}/>
+      {/* <Drawer.Screen name='HomeScreen' component={HomeScreen}/> */}
       <Drawer.Screen name='NewItemScreen' component={NewItem}/>
       <Drawer.Screen name='NewCategoryScreen' component={NewCategory}/>
 
@@ -55,7 +56,7 @@ function HomeDrawer(){
 function HomeHandler(){
   return(
     <Stack.Navigator screenOptions={{headerShown:false}}>
-      <Stack.Screen name='HomeDrawer' component={HomeDrawer}/>
+      <Stack.Screen name='HomeScreen' component={HomeScreen}/>
     </Stack.Navigator>
   )
 }
@@ -167,6 +168,8 @@ function CartHandler(){
 
 
         <Stack.Screen name='BottomTabs' component={TabScreens}/>
+        <Stack.Screen name='HomeDrawer' component={HomeDrawer}/>
+
       </Stack.Navigator>
     )
   }
@@ -176,11 +179,13 @@ function CartHandler(){
   return (
    <>
    <StatusBar style='light' backgroundColor='transparent'/>
+   <GestureHandlerRootView style={{ flex: 1 }}>
    <ContextProvider>
    <NavigationContainer>
     <Start/>
     </NavigationContainer>
     </ContextProvider>
+    </GestureHandlerRootView>
     </>
   );
 }

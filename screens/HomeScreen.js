@@ -61,8 +61,6 @@ export default function HomeScreen({ navigation }) {
   const [address, setAddress] = useState("");
   const [banners, setBanners] = useState([]);
 
-  
-
   useEffect(() => {
     // Get current location
     const getCurrentLocation = async () => {
@@ -103,35 +101,32 @@ export default function HomeScreen({ navigation }) {
 
     // Get current location and verify camera permissions
     getCurrentLocation();
-    getBannersList()
+    getBannersList();
   }, []);
   const getBannersList = () => {
-
-        var endPoint = EndPoints.banners ;
-        Service.getUsingToken(endPoint, (res) => {
-            console.log("data----->",res)
-            setBanners(res?.banners)
-
-        },
-            (err) => {
-            }
-        );
-    };
+    var endPoint = EndPoints.banners;
+    Service.getUsingToken(
+      endPoint,
+      (res) => {
+        console.log("data----->", res);
+        setBanners(res?.banners);
+      },
+      (err) => {}
+    );
+  };
   return (
-    <View style={{ backgroundColor: "black", flex: 1 ,paddingTop:h(4.5)}}>
-           
-
+    <View style={{ backgroundColor: "black", flex: 1, paddingTop: h(4.5) }}>
       <View
         style={{
           height: h(6),
-          backgroundColor:'black',
+          backgroundColor: "black",
           flexDirection: "row",
           justifyContent: "center",
         }}
       >
         <TouchableWithoutFeedback
           onPress={() => {
-            navigation.openDrawer();
+            navigation.navigate("HomeDrawer");
           }}
         >
           <Image
@@ -159,24 +154,22 @@ export default function HomeScreen({ navigation }) {
           }}
         />
       </View>
-      <SvgXml xml={svgCode} width="100%" height="100%" style={{ position: 'absolute', zIndex: -1 ,marginTop:h(4.5)}} />
-      <ScrollView style={{ flex: 1, }}>
-        <ImageBackground
-         
-          style={{  }}
-          resizeMode="cover"
-        >
-          
-               
-
+      <SvgXml
+        xml={svgCode}
+        width="100%"
+        height="100%"
+        style={{ position: "absolute", zIndex: -1, marginTop: h(4.5) }}
+      />
+      <ScrollView style={{ flex: 1 }}>
+        <ImageBackground style={{}} resizeMode="cover">
           {/* location */}
           <View
             style={{
               flexDirection: "row",
               backgroundColor: "#242424",
-             
-              borderBottomLeftRadius:  h(1),
-              borderBottomRightRadius:  h(1),
+
+              borderBottomLeftRadius: h(1),
+              borderBottomRightRadius: h(1),
               alignItems: "center",
               padding: h(0.9),
             }}
@@ -197,28 +190,30 @@ export default function HomeScreen({ navigation }) {
             </Text>
           </View>
           {/* search */}
-          <Pressable onPress={()=>{navigation.navigate('SearchHandler')}}>
-
-          <View
-            style={{
-              marginTop:h(1),
-              borderWidth: 1,
-              borderColor: Colorss.green,
-              
-              marginHorizontal:w(1),
-              flexDirection: "row",
-              backgroundColor: Colorss.white,
-              borderRadius:h(1.2)
+          <Pressable
+            onPress={() => {
+              navigation.navigate("SearchHandler");
             }}
-            >
-            {/* <TextInput style={{flex:1,padding:w(1.5),color:'black'}} placeholder="Search"></TextInput> */}
-            <ChangingPlaceholderTextInput navigation={navigation}/>
-            <View style={{alignSelf:'center',paddingEnd:w(3)}}>
+          >
+            <View
+              style={{
+                marginTop: h(1),
+                borderWidth: 1,
+                borderColor: Colorss.green,
 
-            <SvgSelector name={"search"} fill={"black"} w={w(5)} h={w(5)} />
-          </View>
-          </View>
-            </Pressable>
+                marginHorizontal: w(1),
+                flexDirection: "row",
+                backgroundColor: Colorss.white,
+                borderRadius: h(1.2),
+              }}
+            >
+              {/* <TextInput style={{flex:1,padding:w(1.5),color:'black'}} placeholder="Search"></TextInput> */}
+              <ChangingPlaceholderTextInput navigation={navigation} />
+              <View style={{ alignSelf: "center", paddingEnd: w(3) }}>
+                <SvgSelector name={"search"} fill={"black"} w={w(5)} h={w(5)} />
+              </View>
+            </View>
+          </Pressable>
 
           {/* viewpager */}
           <View
@@ -232,36 +227,97 @@ export default function HomeScreen({ navigation }) {
             }}
           >
             <ViewPager banners={banners} />
-          
           </View>
-{/* categories predefined */}
-<View>
-
-
-
-</View>
-          <View >
-            <NewCategories/>
+          {/* categories predefined */}
+          <View></View>
+          <View>
+            <NewCategories />
             {/* Recommending Recipies */}
-            <View style={{backgroundColor:'#000000B0',marginTop:h(2)}}>
-              <View style={{flexDirection:'row',backgroundColor:'#36443956',width: "100%",justifyContent:'space-between',padding:w(2),borderWidth:w(0.3)}}> 
-            <Text style={{color:'white',fontSize:dynamicFontSize*1.3,fontWeight:'500',textAlign:'center',}}>Recommending Recipies</Text>
-            <Text style={{color:'#ccc',fontSize:dynamicFontSize*0.7,fontWeight:'500',padding:w(2),height: "100%",textAlignVertical:'bottom'}}>View More..</Text>
-
+            <View style={{ backgroundColor: "#000000B0", marginTop: h(2) }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "#36443956",
+                  width: "100%",
+                  justifyContent: "space-between",
+                  padding: w(2),
+                  borderWidth: w(0.3),
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: dynamicFontSize * 1.3,
+                    fontWeight: "500",
+                    textAlign: "center",
+                  }}
+                >
+                  Recommending Recipies
+                </Text>
+                <Text
+                  style={{
+                    color: "#ccc",
+                    fontSize: dynamicFontSize * 0.7,
+                    fontWeight: "500",
+                    padding: w(2),
+                    height: "100%",
+                    textAlignVertical: "bottom",
+                  }}
+                >
+                  View More..
+                </Text>
               </View>
 
-            <ItemContainer limit={4} islimit={true}/>
+              <ItemContainer limit={4} islimit={true} />
             </View>
 
-{/* Trending Recipies */}
-            <View style={{backgroundColor:'#000000B0',marginTop:h(2),borderRadius:w(2),overflow:'hidden',marginBottom:h(5)}}>
-              <View style={{flexDirection:'row',backgroundColor:'#36443956',width: "100%",justifyContent:'space-between',padding:w(2),borderWidth:w(0.3),borderTopStartRadius:w(2),borderTopEndRadius:w(2)}}> 
-            <Text style={{color:'white',fontSize:dynamicFontSize*1.3,fontWeight:'500',textAlign:'center',}}>Trending Recipies</Text>
-            <Text style={{color:'#ccc',fontSize:dynamicFontSize*0.7,fontWeight:'500',padding:w(2),height: "100%",textAlignVertical:'bottom'}}>View More..</Text>
-
+            {/* Trending Recipies */}
+            <View
+              style={{
+                backgroundColor: "#000000B0",
+                marginTop: h(2),
+                borderRadius: w(2),
+                overflow: "hidden",
+                marginBottom: h(5),
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  backgroundColor: "#36443956",
+                  width: "100%",
+                  justifyContent: "space-between",
+                  padding: w(2),
+                  borderWidth: w(0.3),
+                  borderTopStartRadius: w(2),
+                  borderTopEndRadius: w(2),
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: dynamicFontSize * 1.3,
+                    fontWeight: "500",
+                    textAlign: "center",
+                  }}
+                >
+                  Trending Recipies
+                </Text>
+                <Text
+                  style={{
+                    color: "#ccc",
+                    fontSize: dynamicFontSize * 0.7,
+                    fontWeight: "500",
+                    padding: w(2),
+                    height: "100%",
+                    textAlignVertical: "bottom",
+                  }}
+                >
+                  View More..
+                </Text>
               </View>
 
-            <ItemContainer limit={0} islimit={false}/>
+              <ItemContainer limit={0} islimit={false} />
             </View>
           </View>
         </ImageBackground>
