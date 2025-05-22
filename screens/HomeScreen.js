@@ -254,7 +254,7 @@ export default function HomeScreen({ navigation }) {
             </View>
 
 {/* Trending Recipies */}
-            <View style={{backgroundColor:'#000000B0',marginTop:h(2),borderRadius:w(2),overflow:'hidden'}}>
+            <View style={{backgroundColor:'#000000B0',marginTop:h(2),borderRadius:w(2),overflow:'hidden',marginBottom:h(5)}}>
               <View style={{flexDirection:'row',backgroundColor:'#36443956',width: "100%",justifyContent:'space-between',padding:w(2),borderWidth:w(0.3),borderTopStartRadius:w(2),borderTopEndRadius:w(2)}}> 
             <Text style={{color:'white',fontSize:dynamicFontSize*1.3,fontWeight:'500',textAlign:'center',}}>Trending Recipies</Text>
             <Text style={{color:'#ccc',fontSize:dynamicFontSize*0.7,fontWeight:'500',padding:w(2),height: "100%",textAlignVertical:'bottom'}}>View More..</Text>

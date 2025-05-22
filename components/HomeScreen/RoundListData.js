@@ -24,9 +24,10 @@ export default function RoundListData({id,url,name}) {
     const height = Dimensions.get("window").height / 100; // now height is 1% of screen height
     return height * value;
   }
-  const img=`http://192.168.1.9:5000/${url}`
+  
+  const img=`http://192.168.1.9:5000/${url.replace(/\\/g, '/')}`
 
-  console.log(img)
+  console.log("img++> "+ img)
   // const img=`../../${url}`
   return (
     <TouchableOpacity  style={{height: w(20),width: w(15),marginStart:w(4),marginTop:h(1),overflow:'hidden'}}>
