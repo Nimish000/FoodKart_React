@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,41 +9,105 @@ import {
   TouchableWithoutFeedback,
   TouchableWithoutFeedbackBase,
   TouchableOpacity,
-  TextInput,
+  Modal,
+  Button,
 } from "react-native";
-import { AppUtil } from "../Utils/AppUtils";
+import { _baseURL, AppUtil, dynamicFontSize } from "../Utils/AppUtils";
 import { Colorss } from "../Colors/Colors";
 import SvgSelector from "../Utils/SvgSelector";
+import RecentOrderItem from "../components/AccountScreen/RecentOrderItem";
+import RecentOrders from "../components/AccountScreen/RecentOrders";
+import EditModal from "../components/AccountScreen/EditModal";
+import { TextInput } from "react-native-paper";
+import { useCameraPermissions, useMediaLibraryPermissions, launchCameraAsync, launchImageLibraryAsync, PermissionStatus } from 'expo-image-picker';
+
 
 export default function ProfileScreen() {
+  useEffect(() => {
+    if (resImage == "") {
+      setImage(`${_baseURL}uploads/1747941919716.jpg`);
+    }
+  }, [resImage]);
+
   const [isEditable, setEditable] = useState(false);
-  const[name,setName]=useState("Nimish Sharma");
-  const[email, setEmail]=useState("nimish@gmail.com");
+  const [name, setName] = useState("Nimish Sharma");
+  const [email, setEmail] = useState("nimish@gmail.com");
+  const [address, setAddress] = useState("Xyz Building");
+
+  //Camera Code Starts
+  const [resImage, setImage] = useState("");
+  const [cameraPermissionInformation, requestCameraPermission] =
+    useCameraPermissions();
+  const [mediaLibraryPermissionInformation, requestMediaLibraryPermission] =
+    useMediaLibraryPermissions();
+
+  async function verifyPermissions() {
+    const cameraPermissionGranted = await handlePermission(
+      cameraPermissionInformation,
+      requestCameraPermission,
+      "Camera"
+    );
+    const mediaLibraryPermissionGranted = await handlePermission(
+      mediaLibraryPermissionInformation,
+      requestMediaLibraryPermission,
+      "Media Library"
+    );
+
+    return cameraPermissionGranted && mediaLibraryPermissionGranted;
+  }
+  async function handlePermission(
+    permissionInformation,
+    requestPermission,
+    permissionType
+  ) {
+    if (permissionInformation.status === PermissionStatus.UNDETERMINED) {
+      const permissionResponse = await requestPermission();
+      return permissionResponse.granted;
+    }
+
+    if (permissionInformation.status === PermissionStatus.DENIED) {
+      Alert.alert(
+        `Permissions Denied for ${permissionType}`,
+        `Please enable ${permissionType.toLowerCase()} permission in your device settings.`
+      );
+      const permissionResponse = await requestPermission();
+      return permissionResponse.granted;
+      return false;
+    }
+
+    return true;
+  }
+
+  async function takeImageHandler(useCamera = false) {
+    const hasPermission = await verifyPermissions();
+
+    if (!hasPermission) {
+      return;
+    }
+
+    let image;
+
+    if (useCamera) {
+      image = await launchCameraAsync({
+        allowsEditing: true,
+        aspect: [16, 9],
+        quality: 0.5,
+      });
+      setImage(image.assets[0].uri);
+    } else {
+      image = await launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [16, 9],
+        quality: 0.5,
+      });
+      setImage(image.assets[0].uri);
+    }
+  }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#000" }}>
+    <View style={{ flex: 1, backgroundColor: "#000",paddingTop:AppUtil.getHP(4) }}>
       {/* Background Image */}
-      <Image
-        source={{ uri: "http://192.168.1.9:5000/uploads/1747941919716.jpg" }}
-        style={styles.backgroundImage}
-      />
-      {isEditable && (
-        <View
-          style={{
-            position: "absolute",
-            marginTop: AppUtil.getHP(20),
-            alignSelf: "flex-end",
-            marginEnd: AppUtil.getWP(5),
-          }}
-        >
-          <SvgSelector
-            name={"camera"}
-            fill={Colorss.black}
-            w={AppUtil.getWP(8)}
-            h={AppUtil.getWP(8)}
-          />
-        </View>
-      )}
+      <Image source={{ uri: resImage }} style={styles.backgroundImage} />
 
       {/* Scrollable Content */}
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -60,28 +124,17 @@ export default function ProfileScreen() {
                 flex: 1,
               }}
             >
-              <TextInput style={styles.userName}
-            value={name}
-            onChangeText={setName}
-            editable={isEditable}
-            />
-              <TouchableOpacity onPress={()=>setEditable(!isEditable)} > 
-
-              <SvgSelector
-                name={"editP"}
-                fill={Colorss.green}
-                w={AppUtil.getWP(8)}
-                h={AppUtil.getWP(8)}
-              />
+              <Text style={styles.userName}>{name}</Text>
+              <TouchableOpacity onPress={() => setEditable(!isEditable)}>
+                <SvgSelector
+                  name={"editP"}
+                  fill={Colorss.green}
+                  w={AppUtil.getWP(8)}
+                  h={AppUtil.getWP(8)}
+                />
               </TouchableOpacity>
-
             </View>
-
-            <TextInput style={styles.userEmail}
-            value={email}
-            onChangeText={setEmail}
-            editable={isEditable}
-            />
+            <Text style={styles.userEmail}>{email}</Text>
           </View>
 
           {/* Voucher */}
@@ -90,26 +143,111 @@ export default function ProfileScreen() {
           </View> */}
 
           {/* Favorite List (repeatable card) */}
-          <Text style={styles.sectionTitle}>Recent Orders</Text>
-
-          {[1, 2, 3].map((_, index) => (
-            <View key={index} style={styles.foodCard}>
-              <Image
-                source={{ uri: "https://picsum.photos/60/60" }}
-                style={styles.foodImage}
-              />
-              <View style={{ flex: 1, marginLeft: 10 }}>
-                <Text style={styles.foodName}>Spacy fresh crab</Text>
-                <Text style={styles.restaurantName}>Waroenk kita</Text>
-                <Text style={styles.price}>$ 35</Text>
-              </View>
-              <View style={styles.buyButton}>
-                <Text style={{ color: "#fff" }}>Buy Again</Text>
-              </View>
-            </View>
-          ))}
+          <RecentOrders />
         </View>
       </ScrollView>
+
+      <Modal
+        animationType="slide"
+        visible={isEditable}
+        backdropColor={"#0000006F"}
+        transparent={true}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: Colorss.white,
+            marginTop: AppUtil.getHP(20),
+           
+            borderRadius: AppUtil.getWP(5),
+            padding: AppUtil.getWP(5),
+          }}
+        >
+          <Text style={styles.Modalheading}>Edit Profile</Text>
+          <View
+            style={{ backgroundColor: Colorss.grey, height: 1, marginTop: 5 }}
+          />
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: AppUtil.getHP(2),
+              paddingHorizontal: AppUtil.getWP(4),
+            }}
+          >
+            {/* Profile Image */}
+            <View style={{ marginRight: AppUtil.getWP(4) }}>
+              <Image
+                style={{
+                  width: AppUtil.getWP(22),
+                  height: AppUtil.getWP(22),
+                  borderRadius: AppUtil.getWP(11),
+                  borderWidth: 2,
+                  borderColor: "#ccc",
+                }}
+                source={{ uri: resImage }}
+              />
+            </View>
+
+            {/* Text and Buttons */}
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity
+                style={styles.imageBtn}
+                onPress={() => takeImageHandler()}
+              >
+                <Text style={styles.imageBtnText}>Edit Profile Picture</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <TextInput
+            style={styles.ModalTextInput}
+            value={name}
+            onChangeText={setName}
+            editable={isEditable}
+            multiline={false}
+            label={"Full Name"}
+            mode="outlined"
+            activeOutlineColor={Colorss.black}
+            textColor={Colorss.black}
+          />
+          <TextInput
+            style={styles.ModalTextInput}
+            value={email}
+            onChangeText={setEmail}
+            editable={false}
+            multiline={false}
+            label={"Email"}
+            mode="outlined"
+            activeOutlineColor={Colorss.black}
+            textColor={Colorss.black}
+          />
+          <TextInput
+            style={styles.ModalTextInput}
+            value={address}
+            onChangeText={setAddress}
+            editable={true}
+            multiline={false}
+            label={"Address"}
+            mode="outlined"
+            activeOutlineColor={Colorss.black}
+            textColor={Colorss.black}
+          />
+
+          <TouchableOpacity
+            onPress={() => setEditable(false)}
+            style={{
+              backgroundColor: Colorss.green,
+              padding: AppUtil.getWP(2),
+              borderRadius: AppUtil.getWP(5),
+              margin: AppUtil.getHP(3),
+            }}
+          >
+            <Text style={styles.ModalButton}>Update</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -118,10 +256,11 @@ const styles = StyleSheet.create({
   backgroundImage: {
     width: "100%",
     height: AppUtil.getHP(35),
+    marginTop:AppUtil.getHP(4),
     position: "absolute",
   },
   scrollContent: {
-    paddingTop: AppUtil.getHP(28), // ensures overlap
+    paddingTop: AppUtil.getHP(24), // ensures overlap
   },
   contentContainer: {
     backgroundColor: Colorss.black,
@@ -164,43 +303,33 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 20,
   },
-  sectionTitle: {
+  Modalheading: {
+    fontSize: dynamicFontSize * 1.4,
+    textAlign: "center",
+    fontWeight: 700,
+  },
+  ModalButton: {
+    fontSize: dynamicFontSize * 1.2,
+    textAlign: "center",
+  },
+  ModalTextInput: {
+    fontSize: dynamicFontSize * 1.2,
+    backgroundColor: Colorss.modalTextInput,
+
+    marginTop: AppUtil.getHP(1),
+    borderRadius: AppUtil.getHP(1),
+  },
+  imageBtn: {
+    backgroundColor: Colorss.green,
+    paddingVertical: AppUtil.getHP(1),
+    paddingHorizontal: AppUtil.getWP(4),
+    borderRadius: AppUtil.getWP(2),
+    marginRight: AppUtil.getWP(2),
+  },
+  imageBtnText: {
     color: "#fff",
-    fontSize: 18,
-    fontWeight: "600",
-    marginBottom: 10,
-  },
-  foodCard: {
-    backgroundColor: "#222",
-    flexDirection: "row",
-    alignItems: "center",
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 12,
-  },
-  foodImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 10,
-  },
-  foodName: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  restaurantName: {
-    color: "#aaa",
-    fontSize: 12,
-  },
-  price: {
-    color: "#39ff14",
-    fontWeight: "bold",
-    marginTop: 5,
-  },
-  buyButton: {
-    backgroundColor: "#16c784",
-    borderRadius: 20,
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    marginLeft: 10,
+    fontSize: AppUtil.getHP(1.6),
+    fontWeight: "500",
+    alignSelf:'center'
   },
 });

@@ -25,7 +25,7 @@ export default function RoundListData({id,url,name}) {
     return height * value;
   }
   
-  const img=`http://192.168.1.9:5000/${url.replace(/\\/g, '/')}`
+  const img=`${_baseURL}${url.replace(/\\/g, '/')}`
 
   console.log("img++> "+ img)
   // const img=`../../${url}`

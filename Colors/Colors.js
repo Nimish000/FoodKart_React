@@ -6,7 +6,8 @@ export const Colorss={
     'inActive':'#fff',
     'white':'#fff',
     'black':'#000',
-    'grey':'#252525'
+    'grey':'#252525',
+    'modalTextInput':'#ADADAD'
 
 
 }

@@ -18,6 +18,7 @@ import { UserManager } from "../manager/UserManager.js";
 import { AppUtil, dynamicFontSize } from "../Utils/AppUtils.js";
 import { Ionicons } from "@expo/vector-icons";
 import { validateLogin } from "../Utils/Validations.js";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Register({ navigation }) {
   const [password, setPassword] = useState("");
@@ -26,8 +27,6 @@ export default function Register({ navigation }) {
 
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
-
-
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -45,31 +44,27 @@ export default function Register({ navigation }) {
       formData.append("email", email);
       formData.append("password", password);
       // formData.append('device_id', deviceId)
-  
+
       Service.postFormDataFetch(
         EndPoints.login,
         formData,
         (res) => {
           UserManager.token = res?.data?.token;
-        
+
           console.log(res);
           console.log(UserManager.token);
           console.log("Login successful");
-          Alert.alert("Login Successfully")
-      navigation.navigate("BottomTabs");
-         
+          Alert.alert("Login Successfully");
+          navigation.navigate("BottomTabs");
         },
         (err) => {
           console.log("###", err);
         }
       );
-      
     } else {
       // Display validation error message
       Alert.alert("Validation Error", validationResult.errorMessage);
     }
-
-   
   };
   const onRegisterRequest = () => {
     var formData = new FormData();
@@ -79,7 +74,6 @@ export default function Register({ navigation }) {
     formData.append("password", password);
     formData.append("role", "admin");
     formData.append("mobile", mobile);
-
 
     // formData.append('device_id', deviceId)
 
@@ -96,15 +90,14 @@ export default function Register({ navigation }) {
         // UserManager.userPassword = isPassword;
         // UserManager.deviceId = deviceId;
         console.log(res);
-        if(res?.result_flag==1){
-          Alert.alert(res.message)
-
-        }else{
-          Alert.alert(res.message)
-
+        if (res?.result_flag == 1) {
+          Alert.alert(res.message);
+          navigation.navigate('BottomTabs')
+        } else {
+          Alert.alert(res.message);
         }
         
-        
+
         // console.log(UserManager.token);
         // getServicesList()
 
@@ -119,7 +112,7 @@ export default function Register({ navigation }) {
       },
       (err) => {
         console.log("###", err);
-        Alert.alert(err)
+        Alert.alert(err);
       }
     );
   };
@@ -159,7 +152,9 @@ export default function Register({ navigation }) {
         paddingTop: AppUtil.getHP(4.5),
       }}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "" }}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "" }}
+      >
         <View style={{ alignItems: "center" }}>
           <Image
             style={{
@@ -173,7 +168,7 @@ export default function Register({ navigation }) {
         </View>
         <View style={{ marginTop: AppUtil.getHP(8) }}>
           {/* name */}
-        <View style={styles.container}>
+          <View style={styles.container}>
             <TextInput
               placeholder="Name"
               placeholderTextColor="#757575"
@@ -186,7 +181,7 @@ export default function Register({ navigation }) {
               <Ionicons name={"person"} size={24} color="#757575" />
             </TouchableOpacity>
           </View>
-{/* email */}
+          {/* email */}
           <View style={styles.container}>
             <TextInput
               placeholder="Email"
@@ -200,7 +195,7 @@ export default function Register({ navigation }) {
               <Ionicons name={"mail"} size={24} color="#757575" />
             </TouchableOpacity>
           </View>
-{/* password */}
+          {/* password */}
           <View style={styles.container}>
             <TextInput
               placeholder="Password"
@@ -236,9 +231,6 @@ export default function Register({ navigation }) {
             </TouchableOpacity>
           </View>
 
-        
-
-
           <TouchableOpacity
             onPress={onRegisterRequest}
             style={styles.buttonContainer}
@@ -246,7 +238,7 @@ export default function Register({ navigation }) {
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
@@ -280,8 +272,8 @@ const styles = StyleSheet.create({
     marginTop: AppUtil.getHP(8),
     marginHorizontal: AppUtil.getWP(20),
     borderRadius: AppUtil.getHP(2),
-    marginBottom:AppUtil.getHP(8),
-    alignItems: "center"
+    marginBottom: AppUtil.getHP(8),
+    alignItems: "center",
   },
   buttonText: {
     color: "#ffffff", // Change the text color to your preference

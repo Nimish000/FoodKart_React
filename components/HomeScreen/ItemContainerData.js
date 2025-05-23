@@ -1,5 +1,6 @@
 import { View, Text, Dimensions, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
+import { _baseURL } from '../../Utils/AppUtils';
 
 export default function ItemContainerData({_id,url,name,price,description}) {
     const { width, height } = Dimensions.get("window");
@@ -22,7 +23,7 @@ export default function ItemContainerData({_id,url,name,price,description}) {
     const height = Dimensions.get("window").height / 100; // now height is 1% of screen height
     return height * value;
   }
-  const img=`http://192.168.1.9:5000/${url.replace(/\\/g, '/')}`
+  const img=`${_baseURL}${url.replace(/\\/g, '/')}`
 
   return (
     <TouchableOpacity  style={{height: w(40),width: w(40),marginBottom:w(2),marginHorizontal:w(5),marginTop:h(1),overflow:'hidden',borderWidth:0}}>
