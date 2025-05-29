@@ -4,6 +4,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import ItemContainerData from './ItemContainerData';
 import { EndPoints } from '../../Utils/Service/Endpoint';
 import { Service } from '../../Utils/Service/Service';
+import { Colorss } from '../../Colors/Colors';
+import { AppUtil, dynamicFontSize } from '../../Utils/AppUtils';
 
 export default function ItemContainer({limit,islimit}) {
 
@@ -14,11 +16,11 @@ export default function ItemContainer({limit,islimit}) {
     
       const getCategoriesList = () => {
     
-        var endPoint = EndPoints.items ;
+        var endPoint = EndPoints.getRestaurants ;
         Service.getUsingToken(endPoint, (res) => {
             console.log("item data----->",res)
-            setItems(res?.items)
-            console.log("get item",items[0])
+            setItems(res?.list)
+            console.log("get item",list[0])
     
         },
             (err) => {
@@ -26,18 +28,7 @@ export default function ItemContainer({limit,islimit}) {
         );
     };
 
-    const Data = [
-        { id: 1, image: require('../../assets/drawables/1.jpg'), name: "Pancake"                 ,price:"$30"},
-        { id: 2, image: require('../../assets/drawables/pasta.jpg'), name: "Pasta"               ,price:"$30"},
-        { id: 3, image: require('../../assets/drawables/rajkachori.jpg'), name: "Raj Kachori"    ,price:"$30"},
-        { id: 4, image: require('../../assets/drawables/samosa.jpg'), name: "Samosa"             ,price:"$30"},
-        { id: 5, image: require('../../assets/drawables/shahi.jpg'), name: "Paneer"              ,price:"$30"},
-        { id: 6, image: require('../../assets/drawables/vadapao.jpg'), name: "VadaPao"           ,price:"$30"},
-        { id: 7, image: require('../../assets/drawables/dosa.jpeg'), name: "Dosa"                ,price:"$30"},
-        { id: 8, image: require('../../assets/drawables/chilipotato.jpg'), name: "Chili Potato"  ,price:"$30"},
-        { id: 9, image: require('../../assets/drawables/jalebi.jpg'), name: "Jalebi"             ,price:"$30"},
-        { id: 10, image:require('../../assets/drawables/panipuri.webp'), name: "Panipuri"        ,price:"$30"},
-    ];
+  
     
       function renderItemHandler(itemData) {
         return <ItemContainerData {...itemData.item} />;
@@ -48,6 +39,29 @@ export default function ItemContainer({limit,islimit}) {
     //     setNewData(Data)
     //   }
       return (
+        <View>
+ <View style={{ flex: 1, flexDirection: "row" }}>
+        <Text
+          style={{
+            flex: 0,
+            color: Colorss.white,
+            fontSize: dynamicFontSize*0.9,
+            fontWeight: 500,
+            margin: AppUtil.getWP(2),
+          }}
+        >
+          TOP RESTAURANTS TO EXPLORE
+        </Text>
+        <View
+          style={{
+            height: 1,
+            backgroundColor: Colorss.grey,
+            flex: 1,
+            alignSelf: "center",
+            marginEnd: AppUtil.getWP(2),
+          }}
+        />
+      </View>
         <FlatList
         
         data={items}
@@ -57,9 +71,11 @@ export default function ItemContainer({limit,islimit}) {
         keyExtractor={(item) => item.id}
         horizontal={false} // Set to true for horizontal layout
          // Set the number of columns (change as needed)
-         numColumns={2}
+      
          scrollEnabled={false}
          
       />
+        </View>
+
       );
 }

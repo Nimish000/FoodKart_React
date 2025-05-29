@@ -2,9 +2,20 @@ export const EndPoints={
     login:'api/login',
     register:'api/register',
     banners:'api/banners',
-    upload:'api/upload',
+    //menu dishes
+    menu:'api/menu',
+    getMenu:'api/menu-list',
+    // categories like pizza pancake
     upload_categories:'api/upload_categories',
     categories:'api/categories',
-    items:'api/items'
+    // restaurants list
+    restaurants:'api/restaurant',
+    getRestaurants:'api/restaurant-list',
+
+    //cart
+    cart:'api/cart',
+    getCart:'api/cart-list',
+    cart_remove:'api/cart-remove'
+
 
 }

@@ -4,20 +4,20 @@ import { _baseURL, AppUtil, dynamicFontSize } from "../../Utils/AppUtils";
 import { Colorss } from "../../Colors/Colors";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ItemContainerData({
-  _id,
-  url,
+export default function SearchRestaurantItem({
+  id,
+  restaurantId,
+  img,
   name,
-  price,
+  onClose,
   description,
-  rating,
-  time,
 }) {
-  const img = `${_baseURL}${url}`;
+  // const img = `${_baseURL}${url.replace(/\\/g, "/")}`;
   const navigation = useNavigation();
 
+  
 
-  return (<TouchableWithoutFeedback onPress={()=> navigation.navigate('RestaurantScreen',{name,description,rating,restaurantId:_id})}>
+  return (<TouchableWithoutFeedback onPress={()=>navigation.navigate('RestaurantScreen',{name,description}) }>
 
     <View style={{flex:1, flexDirection: "row", margin: AppUtil.getWP(5) }}>
       <Image
@@ -29,7 +29,7 @@ export default function ItemContainerData({
           borderRadius: AppUtil.getWP(3),
         }}
       />
-      <View style={{flex:0.6,justifyContent:'center',marginStart:AppUtil.getWP(5)}}>
+      <View style={{flex:0.6,justifyContent:'center',marginStart:AppUtil.getWP(5),marginEnd:AppUtil.getWP(0)}}>
         <Text
           numberOfLines={2}
           style={{
@@ -53,16 +53,17 @@ export default function ItemContainerData({
             marginTop: AppUtil.getHP(0.5),
           }}
         >
-          ⭐{rating} {time} min
+          ⭐4.5 40-45 min
           {/* {restaurant} */}
         </Text>
         <Text
-          numberOfLines={3}
+          numberOfLines={1}
           style={{
             color: Colorss.white,
             alignSelf: "start",
             fontSize: dynamicFontSize * 0.7,
             fontWeight: 100,
+            
             marginTop: AppUtil.getHP(0.5),
           }}
         >
@@ -70,6 +71,7 @@ export default function ItemContainerData({
           {/* {restaurant} */}
         </Text>
       </View>
+
     </View>
     </TouchableWithoutFeedback>
   );

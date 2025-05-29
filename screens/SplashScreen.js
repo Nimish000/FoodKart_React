@@ -8,8 +8,8 @@ const SplashScreenn = ({ navigation }) => {
     const delay = setTimeout(() => {
       // Navigate to your main screen
       // SplashScreen.hideAsync().catch(console.warn);
-      navigation.replace('Intro1Screen'); // Replace with your main screen's name
-    }, 1000); // Adjust the delay as needed
+      // navigation.replace('Intro1Screen'); // Replace with your main screen's name
+    }, 2000); // Adjust the delay as needed
 
     // Clear the timeout on component unmount
     return () => clearTimeout(delay);

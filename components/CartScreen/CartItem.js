@@ -1,31 +1,51 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import { _baseURL } from "../../Utils/AppUtils";
 
-export default function CartItem({ itemName, price, img, quantity }) {
+export default function CartItem({
+  name,
+  price,
+  description,
+  rating,
+  qty,
+  isVeg,
+  url,
+  onPress,
+  onRemove,
+  
+}) {
+  // const [qty, setQty] = useState(quantity);
+
+  const img = `${_baseURL}${url.replace(/\\/g, "/")}`;
+
   return (
-    <View style={styles.cartCard}>
-      <Image
-        source={{ uri: img }}
-        style={styles.itemImage}
-      />
-      <View style={{ flex: 1, marginLeft: 10 }}>
-        <Text numberOfLines={1} style={styles.itemName}>
-          {itemName}
-        </Text>
-        <Text style={styles.price}>₹ {price}</Text>
-        <View style={styles.quantityContainer}>
-          <TouchableOpacity style={styles.quantityButton}>
-            <Text style={styles.buttonText}>-</Text>
-          </TouchableOpacity>
-          <Text style={styles.quantityText}>{quantity}</Text>
-          <TouchableOpacity style={styles.quantityButton}>
-            <Text style={styles.buttonText}>+</Text>
+    <View>
+      {!!qty && (
+        <View style={styles.cartCard}>
+          <Image source={{ uri: img }} style={styles.itemImage} />
+          <View style={{ flex: 1, marginLeft: 10 }}>
+            <Text numberOfLines={1} style={styles.itemName}>
+              {name}
+            </Text>
+            <Text style={styles.price}>₹ {price}</Text>
+            <View style={styles.quantityContainer}>
+              <TouchableOpacity
+                onPress={onRemove}
+                style={styles.quantityButton}
+              >
+                <Text style={styles.buttonText}>-</Text>
+              </TouchableOpacity>
+              <Text style={styles.quantityText}>{qty}</Text>
+              <TouchableOpacity onPress={onPress} style={styles.quantityButton}>
+                <Text style={styles.buttonText}>+</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <TouchableOpacity onPress={onPress} style={styles.removeButton}>
+            <Text style={{ color: "#fff" }}>Remove</Text>
           </TouchableOpacity>
         </View>
-      </View>
-      <TouchableOpacity style={styles.removeButton}>
-        <Text style={{ color: "#fff" }}>Remove</Text>
-      </TouchableOpacity>
+      )}
     </View>
   );
 }

@@ -34,7 +34,7 @@ import {
   
   export default function Intro2({ navigation }) {
     function navigatonHandler() {
-      navigation.navigate("LoginScreen");
+      navigation.navigate("SignInWithEmail");
     }
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>

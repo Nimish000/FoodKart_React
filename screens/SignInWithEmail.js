@@ -18,12 +18,15 @@ import { UserManager } from "../manager/UserManager.js";
 import { AppUtil, dynamicFontSize } from "../Utils/AppUtils.js";
 import { Ionicons } from "@expo/vector-icons";
 import { validateLogin } from "../Utils/Validations.js";
+import { useUser } from "../store/UserContext.js";
 
 export default function SignInWithEmail({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const{updateUser}=useUser()
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -50,6 +53,21 @@ export default function SignInWithEmail({ navigation }) {
           console.log(UserManager.token);
           if (res.result_flag == 1) {
             console.log("Login successful");
+
+            const { _id, name, email, role, token,mobile ,url,address } = res;
+             updateUser({
+    _id: _id,
+    name: name,
+    email: email,
+    url: url,
+    role: role,
+    mobile: mobile,
+    address: address,
+    token: token,
+  });
+
+
+
             Alert.alert(res?.message);
           navigation.navigate("BottomTabs");
 

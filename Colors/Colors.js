@@ -7,7 +7,10 @@ export const Colorss={
     'white':'#fff',
     'black':'#000',
     'grey':'#252525',
-    'modalTextInput':'#ADADAD'
+    'modalTextInput':'#686868',
+    'lightGrey':'#727272',
+    'red':"#e74c3c"
+
 
 
 }

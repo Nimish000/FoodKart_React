@@ -20,6 +20,7 @@ import RecentOrders from "../components/AccountScreen/RecentOrders";
 import EditModal from "../components/AccountScreen/EditModal";
 import { TextInput } from "react-native-paper";
 import { useCameraPermissions, useMediaLibraryPermissions, launchCameraAsync, launchImageLibraryAsync, PermissionStatus } from 'expo-image-picker';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 
 export default function ProfileScreen() {
@@ -153,10 +154,10 @@ export default function ProfileScreen() {
         backdropColor={"#0000006F"}
         transparent={true}
       >
-        <View
+        <KeyboardAwareScrollView showsVerticalScrollIndicator={false}
           style={{
             flex: 1,
-            backgroundColor: Colorss.white,
+            backgroundColor: Colorss.black,
             marginTop: AppUtil.getHP(20),
            
             borderRadius: AppUtil.getWP(5),
@@ -165,7 +166,7 @@ export default function ProfileScreen() {
         >
           <Text style={styles.Modalheading}>Edit Profile</Text>
           <View
-            style={{ backgroundColor: Colorss.grey, height: 1, marginTop: 5 }}
+            style={{ backgroundColor: Colorss.lightGrey, height: 1, marginTop: 5 }}
           />
 
           <View
@@ -184,7 +185,7 @@ export default function ProfileScreen() {
                   height: AppUtil.getWP(22),
                   borderRadius: AppUtil.getWP(11),
                   borderWidth: 2,
-                  borderColor: "#ccc",
+                  borderColor:Colorss.lightGrey,
                 }}
                 source={{ uri: resImage }}
               />
@@ -209,8 +210,11 @@ export default function ProfileScreen() {
             multiline={false}
             label={"Full Name"}
             mode="outlined"
-            activeOutlineColor={Colorss.black}
-            textColor={Colorss.black}
+           
+            
+            
+            activeOutlineColor={Colorss.white}
+            textColor={Colorss.white}
           />
           <TextInput
             style={styles.ModalTextInput}
@@ -220,8 +224,8 @@ export default function ProfileScreen() {
             multiline={false}
             label={"Email"}
             mode="outlined"
-            activeOutlineColor={Colorss.black}
-            textColor={Colorss.black}
+            activeOutlineColor={Colorss.white}
+           textColor={Colorss.white}
           />
           <TextInput
             style={styles.ModalTextInput}
@@ -231,14 +235,14 @@ export default function ProfileScreen() {
             multiline={false}
             label={"Address"}
             mode="outlined"
-            activeOutlineColor={Colorss.black}
-            textColor={Colorss.black}
+            activeOutlineColor={Colorss.white}
+            textColor={Colorss.white}
           />
 
           <TouchableOpacity
             onPress={() => setEditable(false)}
             style={{
-              backgroundColor: Colorss.green,
+              backgroundColor: Colorss.red,
               padding: AppUtil.getWP(2),
               borderRadius: AppUtil.getWP(5),
               margin: AppUtil.getHP(3),
@@ -246,7 +250,7 @@ export default function ProfileScreen() {
           >
             <Text style={styles.ModalButton}>Update</Text>
           </TouchableOpacity>
-        </View>
+        </KeyboardAwareScrollView>
       </Modal>
     </View>
   );
@@ -307,10 +311,12 @@ const styles = StyleSheet.create({
     fontSize: dynamicFontSize * 1.4,
     textAlign: "center",
     fontWeight: 700,
+    color:Colorss.white
   },
   ModalButton: {
     fontSize: dynamicFontSize * 1.2,
     textAlign: "center",
+    color:Colorss.white
   },
   ModalTextInput: {
     fontSize: dynamicFontSize * 1.2,
@@ -318,9 +324,10 @@ const styles = StyleSheet.create({
 
     marginTop: AppUtil.getHP(1),
     borderRadius: AppUtil.getHP(1),
+    color:Colorss.white
   },
   imageBtn: {
-    backgroundColor: Colorss.green,
+    backgroundColor: Colorss.red,
     paddingVertical: AppUtil.getHP(1),
     paddingHorizontal: AppUtil.getWP(4),
     borderRadius: AppUtil.getWP(2),

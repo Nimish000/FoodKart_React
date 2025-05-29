@@ -2,8 +2,12 @@ import { View, Text, Dimensions, Image, Pressable, TouchableOpacity } from 'reac
 import React, { useEffect } from 'react'
 import { Colorss } from '../../Colors/Colors';
 import { _baseURL, AppUtil } from '../../Utils/AppUtils';
+import { useNavigation } from '@react-navigation/native';
 
 export default function RoundListData({id,url,name}) {
+
+  const navigation=useNavigation()
+
   const { width, height } = Dimensions.get("window");
   console.log(id,url,name)
  
@@ -30,8 +34,8 @@ export default function RoundListData({id,url,name}) {
   console.log("img++> "+ img)
   // const img=`../../${url}`
   return (
-    <TouchableOpacity  style={{height: w(20),width: w(15),marginStart:w(4),marginTop:h(1),overflow:'hidden'}}>
-      <Image source={{uri:img}} style={{width: "100%",height: w(17),borderRadius:w(7)}}/>
+    <TouchableOpacity onPress={()=>navigation.navigate('SearchRestaurants',{value:name})}  style={{width: w(18),marginStart:w(4),marginBottom:h(1),overflow:'hidden'}}>
+      <Image source={{uri:img}} style={{width:w(17),height: w(17),borderRadius:w(17)}}/>
      
       {/* <Image source={{uri:`${url}`}} style={{width: "100%",height: w(17),borderRadius:w(7)}}/> */}
       <Text style={{color:'white',alignSelf:'center',fontSize:dynamicFontSize*0.6}}>{name}</Text>

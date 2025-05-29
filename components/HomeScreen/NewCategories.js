@@ -4,6 +4,8 @@ import RoundListData from "./RoundListData";
 import {} from'../../assets/drawables/1.jpg'
 import { EndPoints } from "../../Utils/Service/Endpoint";
 import { Service } from "../../Utils/Service/Service";
+import { Colorss } from "../../Colors/Colors";
+import { AppUtil, dynamicFontSize } from "../../Utils/AppUtils";
 
 const Data = [
   { id: 1, image: require('../../assets/drawables/1.jpg'), name: "Pancake" },
@@ -40,14 +42,40 @@ getCategoriesList()
     return <RoundListData {...itemData.item} />;
   }
   return (
+    <View>
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            <Text
+              style={{
+                flex: 0,
+                color: Colorss.white,
+                fontSize: dynamicFontSize*0.9,
+                fontWeight: 500,
+                margin: AppUtil.getWP(2),
+              }}
+            >
+              USER, WHAT'S ON YOUR MIND?
+            </Text>
+            <View
+              style={{
+                height: 1,
+                backgroundColor: Colorss.grey,
+                flex: 1,
+                alignSelf: "center",
+                marginEnd: AppUtil.getWP(2),
+              }}
+            />
+            </View>
+        
     <FlatList
     data={categories}
     renderItem={renderItemHandler}
     keyExtractor={(item) => item.id}
-    horizontal={false} // Set to true for horizontal layout
+    horizontal={true} // Set to true for horizontal layout
      // Set the number of columns (change as needed)
-     numColumns={6}
-     scrollEnabled={false}
+    //  numColumns={4}
+    
+     scrollEnabled={true}
   />
+  </View>
   );
 }

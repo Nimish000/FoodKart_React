@@ -21,13 +21,19 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error("User already exists");
     }
 const status="Registerd Successfully"
+const url="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+
+const address=""
+
     const user = await User.create({
         status,
         name,
         email,
         password,
         role,
-        mobile
+        mobile,
+        url,
+        address
     });
 
     if (user) {

@@ -26,6 +26,7 @@ import NewCategories from "../components/HomeScreen/NewCategories";
 import ItemContainer from "../components/HomeScreen/ItemContainer";
 import { EndPoints } from "../Utils/Service/Endpoint";
 import { Service } from "../Utils/Service/Service";
+import Restaurants from "../components/HomeScreen/Restaurants";
 // import FontSize from '../Utils/FontSize';
 
 // const width = Dimensions.get('window').width / 100;  // now width is 1% of screen width
@@ -192,7 +193,7 @@ export default function HomeScreen({ navigation }) {
           {/* search */}
           <Pressable
             onPress={() => {
-              navigation.navigate("SearchHandler");
+              navigation.navigate("SearchRestaurants");
             }}
           >
             <View
@@ -228,48 +229,18 @@ export default function HomeScreen({ navigation }) {
           >
             <ViewPager banners={banners} />
           </View>
+{/* Restaurants  */}
+<Restaurants/>
+
+
           {/* categories predefined */}
           <View></View>
           <View>
             <NewCategories />
             {/* Recommending Recipies */}
-            <View style={{ backgroundColor: "#000000B0", marginTop: h(2) }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  backgroundColor: "#36443956",
-                  width: "100%",
-                  justifyContent: "space-between",
-                  padding: w(2),
-                  borderWidth: w(0.3),
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: dynamicFontSize * 1.3,
-                    fontWeight: "500",
-                    textAlign: "center",
-                  }}
-                >
-                  Recommending Recipies
-                </Text>
-                <Text
-                  style={{
-                    color: "#ccc",
-                    fontSize: dynamicFontSize * 0.7,
-                    fontWeight: "500",
-                    padding: w(2),
-                    height: "100%",
-                    textAlignVertical: "bottom",
-                  }}
-                >
-                  View More..
-                </Text>
-              </View>
+            
 
-              <ItemContainer limit={4} islimit={true} />
-            </View>
+          
 
             {/* Trending Recipies */}
             <View
@@ -278,46 +249,12 @@ export default function HomeScreen({ navigation }) {
                 marginTop: h(2),
                 borderRadius: w(2),
                 overflow: "hidden",
-                marginBottom: h(5),
+                marginBottom: h(8),
               }}
             >
-              <View
-                style={{
-                  flexDirection: "row",
-                  backgroundColor: "#36443956",
-                  width: "100%",
-                  justifyContent: "space-between",
-                  padding: w(2),
-                  borderWidth: w(0.3),
-                  borderTopStartRadius: w(2),
-                  borderTopEndRadius: w(2),
-                }}
-              >
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: dynamicFontSize * 1.3,
-                    fontWeight: "500",
-                    textAlign: "center",
-                  }}
-                >
-                  Trending Recipies
-                </Text>
-                <Text
-                  style={{
-                    color: "#ccc",
-                    fontSize: dynamicFontSize * 0.7,
-                    fontWeight: "500",
-                    padding: w(2),
-                    height: "100%",
-                    textAlignVertical: "bottom",
-                  }}
-                >
-                  View More..
-                </Text>
-              </View>
+                            <ItemContainer limit={4} islimit={true} />
 
-              <ItemContainer limit={0} islimit={false} />
+
             </View>
           </View>
         </ImageBackground>

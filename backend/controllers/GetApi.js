@@ -1,7 +1,7 @@
 
 
 const Banner = require("../models/Banner");
-const { Item } = require("../models/Schema");
+
 
 
 // Controller to get the list of banners
@@ -20,20 +20,7 @@ const getBanners = async (req, res) => {
 };
 
 
-// Controller to get the list of items
-const getItems = async (req, res) => {
-  try {
-    const items = await Item.find({});
-    res.status(200).json({
-      message: 'Item List fetched successfully',
-      result_flag: 1,
-      items,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server Error', result_flag: 0 });
-  }
-};
 
-module.exports = { getBanners,getItems };
+
+module.exports = { getBanners };
 
