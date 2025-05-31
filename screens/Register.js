@@ -21,6 +21,32 @@ import { validateLogin } from "../Utils/Validations.js";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Register({ navigation }) {
+
+
+ const validateRegister = ({ name, email, password, mobile }) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const mobileRegex = /^[0-9]{10}$/;
+
+  if (!name || name.trim().length < 2) {
+    return { isValid: false, errorMessage: "Name must be at least 2 characters long." };
+  }
+
+  if (!email || !emailRegex.test(email)) {
+    return { isValid: false, errorMessage: "Please enter a valid email address." };
+  }
+
+  if (!password || password.length < 6) {
+    return { isValid: false, errorMessage: "Password must be at least 6 characters long." };
+  }
+
+  if (!mobile || !mobileRegex.test(mobile)) {
+    return { isValid: false, errorMessage: "Mobile number must be 10 digits." };
+  }
+
+  return { isValid: true };
+};
+
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
@@ -67,6 +93,15 @@ export default function Register({ navigation }) {
     }
   };
   const onRegisterRequest = () => {
+
+ const validationResult = validateRegister({ name, email, password, mobile });
+
+  if (!validationResult.isValid) {
+    Alert.alert("Validation Error", validationResult.errorMessage);
+    return;
+  }
+
+
     var formData = new FormData();
     formData.append("name", name);
 
@@ -92,7 +127,8 @@ export default function Register({ navigation }) {
         console.log(res);
         if (res?.result_flag == 1) {
           Alert.alert(res.message);
-          navigation.navigate('BottomTabs')
+                navigation.replace("SignInWithEmail");
+
         } else {
           Alert.alert(res.message);
         }
@@ -117,32 +153,7 @@ export default function Register({ navigation }) {
     );
   };
 
-  const onLoginRequest = () => {
-    var formData = new FormData();
-    const validationResult = validateLogin(email, password);
 
-    if (validationResult.isValid) {
-      // Perform login logic
-      console.log("Login successful");
-      navigation.navigate("BottomTabs");
-    } else {
-      // Display validation error message
-      Alert.alert("Validation Error", validationResult.errorMessage);
-    }
-
-    formData.append("email", email);
-    formData.append("password", password);
-  };
-  const getServicesList = () => {
-    var endPoint = EndPoints.getProfile;
-    Service.getUsingToken(
-      endPoint,
-      (res) => {
-        console.log("data----->");
-      },
-      (err) => {}
-    );
-  };
 
   return (
     <View
@@ -175,7 +186,7 @@ export default function Register({ navigation }) {
               style={styles.textInput}
               // secureTextEntry={!showPassword}
               value={name}
-              onChangeText={(text) => setName(text)}
+              onChangeText={(text) => setName(text.trimStart())}
             />
             <TouchableOpacity style={styles.iconContainer}>
               <Ionicons name={"person"} size={24} color="#757575" />
@@ -189,7 +200,7 @@ export default function Register({ navigation }) {
               style={styles.textInput}
               // secureTextEntry={!showPassword}
               value={email}
-              onChangeText={(text) => setEmail(text)}
+              onChangeText={(text) => setEmail(text.trim())}
             />
             <TouchableOpacity style={styles.iconContainer}>
               <Ionicons name={"mail"} size={24} color="#757575" />
@@ -222,9 +233,10 @@ export default function Register({ navigation }) {
               placeholder="Mobile Number"
               placeholderTextColor="#757575"
               style={styles.textInput}
+              maxLength={10}
               // secureTextEntry={!showPassword}
               value={mobile}
-              onChangeText={(text) => setMobile(text)}
+              onChangeText={(text) => setMobile(text.replace(/[^0-9]/g, ''))}
             />
             <TouchableOpacity style={styles.iconContainer}>
               <Ionicons name={"phone-portrait"} size={24} color="#757575" />

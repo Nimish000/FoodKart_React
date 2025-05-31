@@ -27,7 +27,7 @@ const uploadCartItem = async (req, res) => {
       existingCartItems[0].restaurantId !== restaurantId
     ) {
       // Remove all items from the cart (if from another restaurant)
-      console.log( existingCartItems)
+      // console.log( existingCartItems)
       await Cart.deleteMany({ userId });
     }
 

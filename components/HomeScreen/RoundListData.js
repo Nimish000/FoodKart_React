@@ -9,8 +9,8 @@ export default function RoundListData({id,url,name}) {
   const navigation=useNavigation()
 
   const { width, height } = Dimensions.get("window");
-  console.log(id,url,name)
- 
+  // console.log(id,url,name)
+//  
   // Calculate a scaling factor based on the screen width
   const scaleFactor = width / 375; // Adjust 375 based on your design reference width
 
@@ -31,7 +31,7 @@ export default function RoundListData({id,url,name}) {
   
   const img=`${_baseURL}${url.replace(/\\/g, '/')}`
 
-  console.log("img++> "+ img)
+  // console.log("img++> "+ img)
   // const img=`../../${url}`
   return (
     <TouchableOpacity onPress={()=>navigation.navigate('SearchRestaurants',{value:name})}  style={{width: w(18),marginStart:w(4),marginBottom:h(1),overflow:'hidden'}}>

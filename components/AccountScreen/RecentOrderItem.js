@@ -2,7 +2,9 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
 import { _baseURL } from "../../Utils/AppUtils";
 
-export default function RecentOrderItem({item,restaurantName,price,img}) {
+export default function RecentOrderItem({items,restaurantName,status,createdAt,totalBill}) {
+
+  const img=`${_baseURL}${items[0].url.replace(/\\/g, '/')}`
   return (
     <View>
     
@@ -14,14 +16,14 @@ export default function RecentOrderItem({item,restaurantName,price,img}) {
         />
         <View style={{ flex: 1, marginLeft: 10 }}>
           <Text numberOfLines={1} style={styles.foodName}>
-            {item}
+             {items.slice(0, 3).map(item => item.name).join(", ")}
           </Text>
           <Text style={styles.restaurantName}>{restaurantName}</Text>
-          <Text style={styles.price}>₹ {price}</Text>
+          <Text style={styles.price}>₹ {totalBill}</Text>
         </View>
-        <View style={styles.buyButton}>
+        {/* <View style={styles.buyButton}>
           <Text style={{ color: "#fff" }}>Buy Again</Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );

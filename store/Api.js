@@ -7,7 +7,7 @@ import axios from'axios'
 
 export async function login(email,password){
     const response=await axios.post(Base_URL+loginUrl,{email:email,password:password})
-    console.log(response.data.success)
+    // console.log(response.data.success)
     return response
 }
 

@@ -36,10 +36,10 @@ import {
         (res) => {
           UserManager.token = res?.data?.token;
         
-          console.log(res);
+          // console.log(res);
           console.log(UserManager.token);
           if (res.result_flag == 1) {
-            console.log("Login successful");
+            // console.log("Login successful");
             Alert.alert(res?.message);
           navigation.navigate("BottomTabs");
   

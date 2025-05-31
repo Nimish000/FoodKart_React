@@ -8,7 +8,7 @@ const loginUrl="api/login"
 
 export async function login(email,password){
     const response=await axios.post(Base_URL+loginUrl,{email:email,password:password})
-    console.log(response.data.success)
+    // console.log(response.data.success)
     return response
 }
 
@@ -19,7 +19,7 @@ export async function getAddress(lat,lon){
         throw new Error('Failed to fetch Address');
     }
     const data= await response.json()
-    console.log(data.display_name)
+    // console.log(data.display_name)
     
     return (data.display_name)
 }       

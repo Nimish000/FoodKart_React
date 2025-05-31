@@ -9,6 +9,7 @@ import {
   Pressable,
   TouchableNativeFeedback,
   TouchableHighlight,
+  ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dimensions } from "react-native";
@@ -61,6 +62,10 @@ export default function HomeScreen({ navigation }) {
   }
   const [address, setAddress] = useState("");
   const [banners, setBanners] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  
+
 
   useEffect(() => {
     // Get current location
@@ -78,7 +83,7 @@ export default function HomeScreen({ navigation }) {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
         });
-        console.log("loc" + reverseGeocode[0]?.name);
+        // console.log("loc" + reverseGeocode[0]?.name);
         // Build address from available components
         const addressComponents = [
           reverseGeocode[0]?.name,
@@ -92,7 +97,7 @@ export default function HomeScreen({ navigation }) {
 
         const formattedAddress = addressComponents.filter(Boolean).join(", ");
         setAddress(formattedAddress);
-        console.log("loc" + JSON.stringify(reverseGeocode, null, 2));
+        // console.log("loc" + JSON.stringify(reverseGeocode, null, 2));
         console.log("loc" + formattedAddress);
       } catch (error) {
         console.error("Error getting location:", error);
@@ -106,11 +111,14 @@ export default function HomeScreen({ navigation }) {
   }, []);
   const getBannersList = () => {
     var endPoint = EndPoints.banners;
+        setLoading(true)
+
     Service.getUsingToken(
       endPoint,
       (res) => {
-        console.log("data----->", res);
+        // console.log("data----->", res);
         setBanners(res?.banners);
+        setLoading(false)
       },
       (err) => {}
     );
@@ -161,7 +169,7 @@ export default function HomeScreen({ navigation }) {
         height="100%"
         style={{ position: "absolute", zIndex: -1, marginTop: h(4.5) }}
       />
-      <ScrollView style={{ flex: 1 }}>
+      {loading ?(<ActivityIndicator size='large' color={Colorss.white}/>):(<ScrollView style={{ flex: 1 }}>
         <ImageBackground style={{}} resizeMode="cover">
           {/* location */}
           <View
@@ -191,12 +199,8 @@ export default function HomeScreen({ navigation }) {
             </Text>
           </View>
           {/* search */}
-          <Pressable
-            onPress={() => {
-              navigation.navigate("SearchRestaurants");
-            }}
-          >
-            <View
+          
+            <Pressable
               style={{
                 marginTop: h(1),
                 borderWidth: 1,
@@ -207,14 +211,16 @@ export default function HomeScreen({ navigation }) {
                 backgroundColor: Colorss.white,
                 borderRadius: h(1.2),
               }}
+               onPress={() => {
+              navigation.navigate("SearchRestaurants");
+            }}
             >
               {/* <TextInput style={{flex:1,padding:w(1.5),color:'black'}} placeholder="Search"></TextInput> */}
               <ChangingPlaceholderTextInput navigation={navigation} />
               <View style={{ alignSelf: "center", paddingEnd: w(3) }}>
                 <SvgSelector name={"search"} fill={"black"} w={w(5)} h={w(5)} />
               </View>
-            </View>
-          </Pressable>
+            </Pressable>
 
           {/* viewpager */}
           <View
@@ -258,7 +264,8 @@ export default function HomeScreen({ navigation }) {
             </View>
           </View>
         </ImageBackground>
-      </ScrollView>
+      </ScrollView>)}
+      
     </View>
   );
 }

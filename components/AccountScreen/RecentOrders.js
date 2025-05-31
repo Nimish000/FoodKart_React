@@ -1,7 +1,12 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native'
-import React from 'react'
+import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native'
+import React, { useCallback, useState } from 'react'
 import RecentOrderItem from './RecentOrderItem';
-import { _baseURL, AppUtil } from '../../Utils/AppUtils';
+import { _baseURL, AppUtil, dynamicFontSize } from '../../Utils/AppUtils';
+import { useUser } from '../../store/UserContext';
+import { Colorss } from '../../Colors/Colors';
+import { useFocusEffect } from '@react-navigation/native';
+import { Service } from '../../Utils/Service/Service';
+import { EndPoints } from '../../Utils/Service/Endpoint';
 
 
 // delete when using api 
@@ -22,25 +27,73 @@ const DATA = [
 
 
 export default function RecentOrders() {
+
+    const{userDetails}=useUser()
+  
+    const[loading,setLoading]=useState(false)
+    const[recentOrder,setRecentOrder]=useState()
+
+
+ useFocusEffect(
+    useCallback(() => {
+      getRecentOrders();
+    }, [])
+  );
+
+  async function getRecentOrders() {
+    const formData = new FormData();
+    formData.append('userId', userDetails._id);
+    setLoading(true);
+
+    try {
+      Service.postFormDataFetch(
+        EndPoints.recentOrder,
+        formData,
+        (res) => {
+          if (res.result_flag === 1) {
+           setRecentOrder(res.orders)
+          }
+          setLoading(false);
+        },
+        (err) => {
+          console.error("###", err);
+          setLoading(false);
+        }
+      );
+    } catch (error) {
+      console.error('Error uploading item:', error);
+      setLoading(false);
+    }
+  }
+
+    
     function renderItem({item}) {
         return <RecentOrderItem {...item} />;
     }
         
     
     
-  return (
-    <View style={{paddingBottom:AppUtil.getHP(6)}}>
+  return (<View>
+{loading?(
+  <ActivityIndicator size='large' color='white'/>
+):(<View style={{paddingBottom:AppUtil.getHP(6),flex:1}}>
   <Text style={styles.sectionTitle}>Recent Orders</Text>
-    <FlatList
-    data={DATA}
+    
+    {recentOrder && recentOrder.length > 0?(<FlatList
+    data={recentOrder}
     renderItem={renderItem}
     keyExtractor={(item) => item.id}
     scrollEnabled={false}
-  />
-    </View>
+  />):(<View style={{}}>
+    <Text style={{flex:1,textAlign:'center',fontSize:dynamicFontSize,color:Colorss.lightGrey,marginTop:AppUtil.getHP(5)}}>No Recent Orders</Text>
+    </View>)}
+    </View>)}
+    
+  </View>
 
   )
 }
+
 
 const styles = StyleSheet.create({
     item: {

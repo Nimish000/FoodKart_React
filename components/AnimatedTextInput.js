@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, StyleSheet, Animated, Easing, Pressable } from "react-native";
+import { View, TextInput, StyleSheet, Animated, Easing, Pressable, TouchableOpacity } from "react-native";
 
 function ChangingPlaceholderTextInput({ navigation }) {
   const placeholders = [
@@ -40,11 +40,11 @@ function ChangingPlaceholderTextInput({ navigation }) {
   }, [placeholderIndex]);
 
   function searchHandler() {
-    navigation.navigate('SearchHandler');
+    navigation.navigate('SearchRestaurants');
   }
 
   return (
-    <View style={styles.container} onPress={searchHandler}>
+    <TouchableOpacity style={styles.container} onPress={searchHandler}>
       <Animated.View
         style={[
           styles.input,
@@ -61,7 +61,7 @@ function ChangingPlaceholderTextInput({ navigation }) {
           editable={false}
         />
       </Animated.View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

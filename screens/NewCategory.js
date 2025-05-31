@@ -83,7 +83,7 @@ export default function NewCategory({ navigation }) {
         EndPoints.upload_categories,
         formData,
         (res) => {
-          console.log(res);
+          // console.log(res);
           if (res.result_flag === 1) {
             alert('Item uploaded successfully');
           } else {

@@ -16,7 +16,7 @@ const ViewPager = ({ navigation }) => {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    console.log(banners);
+    // console.log(banners);
     getBannersList();
   }, []);
 

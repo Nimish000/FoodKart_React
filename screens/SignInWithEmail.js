@@ -49,7 +49,7 @@ export default function SignInWithEmail({ navigation }) {
         (res) => {
           UserManager.token = res?.data?.token;
 
-          console.log(res);
+          // console.log(res);
           console.log(UserManager.token);
           if (res.result_flag == 1) {
             console.log("Login successful");
@@ -68,8 +68,12 @@ export default function SignInWithEmail({ navigation }) {
 
 
 
-            Alert.alert(res?.message);
-          navigation.navigate("BottomTabs");
+            // Alert.alert(res?.message);
+          // navigation.navigate("BottomTabs");
+          navigation.reset({
+  index: 0,
+  routes: [{ name: 'BottomTabs' }],
+});
 
           }else{
             Alert.alert(res?.message);

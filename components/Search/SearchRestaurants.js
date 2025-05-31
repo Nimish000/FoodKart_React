@@ -7,6 +7,8 @@ import { FlatList, ScrollView } from "react-native-gesture-handler";
 import SearchRestaurantItem from "./SearchRestaurantItem";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { EndPoints } from "../../Utils/Service/Endpoint";
+import { Service } from "../../Utils/Service/Service";
 
 const Data = [
   {
@@ -50,6 +52,32 @@ export default function SearchRestaurants() {
   const[search,setSearch]=useState()
   const route = useRoute();
  const value = route?.params?.value ?? null;
+
+ useEffect(() => {
+  const delayDebounce = setTimeout(() => {
+    getCategoriesList();
+  }, 400); // delay for debounce
+
+  return () => clearTimeout(delayDebounce);
+}, [search]);
+
+  useEffect(()=>{
+    getCategoriesList()
+      },[])
+      const [items, setItems] = useState([]);
+    
+     const getCategoriesList = () => {
+  const endPoint = `${EndPoints.search}?keyword=${search || ''}`;
+  Service.getUsingToken(
+    endPoint,
+    (res) => {
+      setItems(res?.list || []);
+    },
+    (err) => {
+      console.error('Search error:', err);
+    }
+  );
+};
 
 
 
@@ -129,7 +157,7 @@ useEffect(() => {
        <KeyboardAwareScrollView>
 
 
-          <FlatList data={Data} renderItem={renderRestaurants} keyExtractor={(item)=>item.id} scrollEnabled={false} showsVerticalScrollIndicator={false}/>
+          <FlatList data={items} renderItem={renderRestaurants} keyExtractor={(item)=>item.id} scrollEnabled={false} showsVerticalScrollIndicator={false}/>
        </KeyboardAwareScrollView>
        
 

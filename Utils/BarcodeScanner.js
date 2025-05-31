@@ -29,7 +29,7 @@ const BarcodeScanner = () => {
   const handleBarcodeScan = ({ data }) => {
     setScanned(true);
     setBarcodeData(data);
-    console.log(barcodeData)
+    // console.log(barcodeData)
   };
 
   if (hasPermission === null) {

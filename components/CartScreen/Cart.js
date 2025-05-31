@@ -1,10 +1,12 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import CartItem from "./CartItem";
 import { useUser } from "../../store/UserContext";
 import { Service } from "../../Utils/Service/Service";
 import { EndPoints } from "../../Utils/Service/Endpoint";
 import { useFocusEffect } from "@react-navigation/native";
+import { AppUtil, dynamicFontSize } from "../../Utils/AppUtils";
+import { Colorss } from "../../Colors/Colors";
 const Data = [
   {
     id: "1",
@@ -57,40 +59,66 @@ const Data = [
   },
 ];
 
-export default function Cart() {
+export default function Cart({list,setTotalPrice}) {
+   const [loading, setLoading] = useState(false); // ✅ loader state
   const { userDetails } = useUser();
   useFocusEffect(
   useCallback(() => {
     getMenuList();
-  }, [])
+    // calculateBillDetails(cart)
+
+    
+  }, [list,cart])
 );
+function calculateBillDetails(cart) {
+  let totalQty = 0;
+  let totalPrice = 0;
+
+  cart.forEach(item => {
+    const qty = item.quantity ?? item.qty ?? 1; // fallback to 1 if undefined
+    totalQty += qty;
+    totalPrice += item.price * qty;
+  });
+
+  setTotalPrice(totalPrice);
+  setTotalQty(totalQty);
+  setTotal(totalPrice)
+}
   const [cart, setCart] = useState([]);
+const [ totalQty, setTotalQty ] = useState(0);
+const [ totalPrice, setTotal ] = useState(0);
 
   async function getMenuList() {
     const formData = new FormData();
     formData.append("userId", userDetails._id);
+    setLoading(true); // ✅ start loading
 
     try {
       Service.postFormDataFetch(
         EndPoints.getCart,
         formData,
         (res) => {
-          console.log(res);
+          // console.log(res);
           if (res.result_flag === 1) {
-            console.log("data----->", res);
+            // console.log("data----->", res);
             setCart(res?.list);
+            calculateBillDetails(res?.list)
+            setLoading(false);
           } else {
             // alert('Some user error');
             console.log("Some user error");
-            console.log(_id);
+            // console.log(_id);
+            setLoading(false);
           }
         },
         (err) => {
           console.log("###", err);
+          setLoading(false);
         }
       );
     } catch (error) {
       console.error("Error uploading item:", error);
+      setLoading(false);
     }
   }
 
@@ -106,7 +134,7 @@ export default function Cart() {
         EndPoints.cart,
         formData,
         (res) => {
-          console.log(res);
+          // console.log(res);
           if (res.result_flag === 1) {
             
             getMenuList();
@@ -136,10 +164,11 @@ export default function Cart() {
         EndPoints.cart_remove,
         formData,
         (res) => {
-          console.log(res);
+          // console.log(res);
           if (res.result_flag === 1) {
           
             getMenuList();
+             refreshCart();
           } else {
             alert("Item not exists");
           }
@@ -170,12 +199,29 @@ export default function Cart() {
 
   return (
     <View>
-      <FlatList
-        scrollEnabled={false}
-        data={cart}
-        key={(item) => item.id}
-        renderItem={renderItem}
-      />
+      
+      {loading ? (
+        <ActivityIndicator size="large" color='white' />
+      ) : (
+        <View>
+
+        <FlatList
+          scrollEnabled={false}
+          data={cart}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        />
+         {/* Bill Details */}
+      <View style={{ padding: 10, backgroundColor: '#333', borderRadius: 8, marginHorizontal: AppUtil.getWP(2), marginBottom: AppUtil.getHP(2) }}>
+        <Text style={{ color: Colorss.white, fontSize: dynamicFontSize * 1.1 }}>
+          Total Items: {totalQty}
+        </Text>
+        <Text style={{ color: Colorss.white, fontSize: dynamicFontSize * 1.1 }}>
+          Total Amount: ₹ {totalPrice.toFixed(2)}
+        </Text>
+      </View>
+        </View>
+      )}
     </View>
   );
 }

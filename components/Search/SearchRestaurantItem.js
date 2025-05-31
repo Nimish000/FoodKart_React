@@ -5,19 +5,19 @@ import { Colorss } from "../../Colors/Colors";
 import { useNavigation } from "@react-navigation/native";
 
 export default function SearchRestaurantItem({
-  id,
-  restaurantId,
-  img,
+  _id,
+  url,
   name,
-  onClose,
+  price,
   description,
+  rating,
+  time,
 }) {
-  // const img = `${_baseURL}${url.replace(/\\/g, "/")}`;
+  const img = `${_baseURL}${url}`;
   const navigation = useNavigation();
 
-  
 
-  return (<TouchableWithoutFeedback onPress={()=>navigation.navigate('RestaurantScreen',{name,description}) }>
+  return (<TouchableWithoutFeedback onPress={()=> navigation.navigate('RestaurantScreen',{name,description,rating,restaurantId:_id})}>
 
     <View style={{flex:1, flexDirection: "row", margin: AppUtil.getWP(5) }}>
       <Image
@@ -29,7 +29,7 @@ export default function SearchRestaurantItem({
           borderRadius: AppUtil.getWP(3),
         }}
       />
-      <View style={{flex:0.6,justifyContent:'center',marginStart:AppUtil.getWP(5),marginEnd:AppUtil.getWP(0)}}>
+      <View style={{flex:0.6,justifyContent:'center',marginStart:AppUtil.getWP(5)}}>
         <Text
           numberOfLines={2}
           style={{
@@ -53,17 +53,16 @@ export default function SearchRestaurantItem({
             marginTop: AppUtil.getHP(0.5),
           }}
         >
-          ⭐4.5 40-45 min
+          ⭐{rating} {time} min
           {/* {restaurant} */}
         </Text>
         <Text
-          numberOfLines={1}
+          numberOfLines={3}
           style={{
             color: Colorss.white,
             alignSelf: "start",
             fontSize: dynamicFontSize * 0.7,
             fontWeight: 100,
-            
             marginTop: AppUtil.getHP(0.5),
           }}
         >
@@ -71,7 +70,6 @@ export default function SearchRestaurantItem({
           {/* {restaurant} */}
         </Text>
       </View>
-
     </View>
     </TouchableWithoutFeedback>
   );

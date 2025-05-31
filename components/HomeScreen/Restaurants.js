@@ -18,9 +18,9 @@ export default function Restaurants() {
       
           var endPoint = EndPoints.getRestaurants ;
           Service.getUsingToken(endPoint, (res) => {
-              console.log("item data----->",res)
+              // console.log("item data----->",res)
               setItems(res?.list)
-              console.log("get item",list[0])
+              // console.log("get item",list[0])
       
           },
               (err) => {

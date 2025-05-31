@@ -30,7 +30,7 @@ getCategoriesList()
 
     var endPoint = EndPoints.categories ;
     Service.getUsingToken(endPoint, (res) => {
-        console.log("data----->",res)
+        // console.log("data----->",res)
         setCategories(res?.categories)
 
     },

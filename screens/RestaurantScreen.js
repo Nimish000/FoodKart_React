@@ -5,8 +5,9 @@ import {
   Image,
   ViewBase,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { AppUtil, dynamicFontSize } from "../Utils/AppUtils";
 import { Colorss } from "../Colors/Colors";
 import SvgSelector from "../Utils/SvgSelector";
@@ -18,6 +19,7 @@ import RestaurantsDishes from "../components/RestaurantScreen/RestaurantsDishes"
 export default function RestaurantScreen({ route }) {
   const navigation = useNavigation();
   const { name, description,rating,restaurantId } = route.params;
+   const [searchText, setSearchText] = useState(""); // ✅ search state
   return (
     <View style={{ backgroundColor: Colorss.black, flex: 1 }}>
       <View
@@ -125,6 +127,8 @@ export default function RestaurantScreen({ route }) {
         <TextInput
           placeholder="Search for dishes"
           placeholderTextColor="#757575"
+           onChangeText={(text) => setSearchText(text)} // ✅ update search text
+           value={searchText}
           style={{
             
             color: Colorss.black,
@@ -134,8 +138,30 @@ export default function RestaurantScreen({ route }) {
           }}
         />
       </View>
-       <RestaurantsDishes restaurantId={restaurantId}/>
+       <RestaurantsDishes restaurantId={restaurantId}  searchText={searchText}/>
         </KeyboardAwareScrollView>
+         <TouchableOpacity
+        style={{
+          position: "absolute",
+          bottom: AppUtil.getHP(3),
+          alignSelf: "center",
+          backgroundColor: Colorss.red,
+          paddingVertical: AppUtil.getHP(1.2),
+          paddingHorizontal: AppUtil.getWP(5),
+          borderRadius: AppUtil.getWP(10),
+          elevation: 5,
+          zIndex: 10,
+          flexDirection:'row',
+          
+
+        }}
+        onPress={() => navigation.navigate("CartHandler")} // 👈 Update with actual screen name
+      >
+        <SvgSelector fill={'white'} name={'CartHandler'} h={20} w={20}/>
+        <Text style={{ marginStart:AppUtil.getWP(2),color: Colorss.white, fontWeight: "bold", fontSize: dynamicFontSize }}>
+          Go to Cart
+        </Text>
+      </TouchableOpacity>
        
 
     </View>
