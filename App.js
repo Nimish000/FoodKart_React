@@ -29,6 +29,7 @@ import NewCategory from "./screens/NewCategory";
 import RestaurantScreen from "./screens/RestaurantScreen";
 import SearchRestaurants from "./components/Search/SearchRestaurants";
 import { UserProvider } from "./store/UserContext";
+import { StripeProvider } from "@stripe/stripe-react-native";
 // import AuthContextProvider, { AuthContext } from "./store/AuthContext";
 // import { AsyncStorage } from "react-native";
 // import { storage } from "./store/Storage";
@@ -210,6 +211,9 @@ export default function App() {
       <StatusBar style="light" backgroundColor="transparent" />
       <GestureHandlerRootView style={{ flex: 1 }}>
         {/* <AuthContextProvider> */}
+         <StripeProvider
+      publishableKey="pk_test_51PNUbM01sm21W1hPzlWYQFIj7Htg70FQstYtExCgSJRIJNwRrpdTHBFnXp1KnIPLvaXFiK9ubiUeUO7lzsWMkF5y00MGAmnoH7"
+    >
 
         <UserProvider>
           <NavigationContainer>
@@ -217,7 +221,7 @@ export default function App() {
           </NavigationContainer>
         </UserProvider>
         {/* </AuthContextProvider> */}
-
+</StripeProvider>
       </GestureHandlerRootView>
     </>
   );

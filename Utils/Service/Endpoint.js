@@ -26,8 +26,10 @@ updateUser:'api/user-update',
 
     //recent orders
     recentOrder:'api/recentOrders',
-    updateRecentOrder:'api/recentOrders-update'
+    updateRecentOrder:'api/recentOrders-update',
 
+    //
+    stripe:'api/create-payment-intent'
 
 
 }

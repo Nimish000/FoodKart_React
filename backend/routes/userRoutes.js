@@ -13,6 +13,7 @@ const { uploadMenuItem, uploadMenu,getMenuItems } = require('../controllers/Menu
 const { createCategory, getCategory, uploadC } = require('../controllers/CategoriesController.js');
 const { uploadRestaurant, uploadItemRestaurant, getRestaurantList, getSearch } = require('../controllers/restaurantsController.js');
 const { getCartlist, uploadCartItem, uploadCartRemove } = require('../controllers/CartController.js');
+const { stripePayment } = require('../controllers/stripeController.js');
 const upload = multer();
 
 router.route('/register').post(upload.any(),registerUser);
@@ -60,6 +61,11 @@ router.route('/cart').post(upload.any(),uploadCartItem);
 //recent orders
 router.route('/recentOrders').post(upload.any(),getRecentOrders);
 router.route('/recentOrders-update').post(upload.any(),createRecentOrder);
+
+//stripe payment gateway
+
+router.route('/create-payment-intent').post(upload.any(),stripePayment);
+
 
 
 

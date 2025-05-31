@@ -6,8 +6,8 @@ import { StringUtil } from './StringUtil';
 const loginUrl="api/login"
 
 
-export const  _baseURL = 'http://192.168.1.7:5000/';
-// export const  _baseURL = 'https://foodkart-mllb.onrender.com/';
+// export const  _baseURL = 'http://192.168.1.5:5000/';
+export const  _baseURL = 'https://foodkart-mllb.onrender.com/';
 
 const _userProfile =  "noData";
 let isLoding = false;

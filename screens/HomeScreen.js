@@ -135,7 +135,7 @@ export default function HomeScreen({ navigation }) {
       >
         <TouchableWithoutFeedback
           onPress={() => {
-            navigation.navigate("HomeDrawer");
+            // navigation.navigate("HomeDrawer");
           }}
         >
           <Image
